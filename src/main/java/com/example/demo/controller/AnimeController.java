@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @AllArgsConstructor
@@ -19,5 +21,10 @@ public class AnimeController {
     @GetMapping("/getMedia/{mediaId}")
     public ResponseEntity<Media> getMedia(@PathVariable Integer mediaId) {
         return new ResponseEntity<>(animeClient.viewMedia(mediaId), HttpStatus.OK);
+    }
+
+    @GetMapping("/getMedia/{fromDate}/{toDate}")
+    public ResponseEntity<List<Media>> getMediaFromDate(@PathVariable Integer fromDate, @PathVariable Integer toDate) {
+        return new ResponseEntity<>(animeClient.getAnimeByDateRange(fromDate, toDate), HttpStatus.OK);
     }
 }
