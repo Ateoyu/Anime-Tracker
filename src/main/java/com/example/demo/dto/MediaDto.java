@@ -12,13 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Media {
+public class MediaDto {
     private Integer id;
-    private Title title;
+    private TitleDto title;
     private Integer episodes;
     @JsonProperty("startDate")
-    private Date startDate;
+    private DateDto startDate;
     @JsonProperty("endDate")
-    private Date endDate;
+    private DateDto endDate;
     private List<String> genres;
 }

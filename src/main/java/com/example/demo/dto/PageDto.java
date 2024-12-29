@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public record Page(
-        PageInfo pageInfo,
+public record PageDto(
+        PageInfoDto pageInfo,
         @JsonProperty("media")
-        List<Media> mediaList
+        List<MediaDto> mediaList
 ) {
 }

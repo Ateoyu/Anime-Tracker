@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.client.AnimeClient;
-import com.example.demo.dto.Media;
+import com.example.demo.dto.MediaDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,18 @@ public class AnimeController {
 
     private final AnimeClient animeClient;
 
-    @GetMapping("/getMedia/{mediaId}")
-    public ResponseEntity<Media> getMedia(@PathVariable Integer mediaId) {
+    @GetMapping("/getMedia/id/{mediaId}")
+    public ResponseEntity<MediaDto> getMedia(@PathVariable Integer mediaId) {
         return new ResponseEntity<>(animeClient.viewMedia(mediaId), HttpStatus.OK);
     }
 
-    @GetMapping("/getMedia/{fromDate}/{toDate}")
-    public ResponseEntity<List<Media>> getMediaFromDate(@PathVariable Integer fromDate, @PathVariable Integer toDate) {
+    @GetMapping("/getMedia/dateRange/{fromDate}/{toDate}")
+    public ResponseEntity<List<MediaDto>> getMediaFromDate(@PathVariable Integer fromDate, @PathVariable Integer toDate) {
         return new ResponseEntity<>(animeClient.getAnimeByDateRange(fromDate, toDate), HttpStatus.OK);
+    }
+
+    @GetMapping("/getMedia/averageScoreGreater/{score}")
+    public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreater(@PathVariable Integer score) {
+        return new ResponseEntity<>(animeClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
     }
 }

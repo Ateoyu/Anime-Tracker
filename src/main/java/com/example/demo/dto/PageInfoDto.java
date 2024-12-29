@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-public record PageInfo(
+public record PageInfoDto(
         int currentPage,
         boolean hasNextPage
 ) {
