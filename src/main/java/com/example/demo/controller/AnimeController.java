@@ -32,4 +32,10 @@ public class AnimeController {
     public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreater(@PathVariable Integer score) {
         return new ResponseEntity<>(animeClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
     }
+
+
+    @GetMapping("/getMedia/test/{score}")
+    public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreaterTest(@PathVariable Integer score) {
+        return new ResponseEntity<>(animeClient.animyByAverageScoreAndCharactersTest(score), HttpStatus.OK);
+    }
 }

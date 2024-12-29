@@ -131,33 +131,57 @@ public class AnimeClient {
 
             //language=GraphQL
             String query = """
-                    query animeByAverageScoreGreaterThan($page: Int, $averageScoreGreater: Int) {
-                      Page(page: $page, perPage: 50) {
-                        pageInfo {
-                          currentPage
-                          hasNextPage
+                    query getAnimeCharacters($page: Int, $averageScoreGreater: Int) {
+                        Page(page: $page, perPage: 50) {
+                            pageInfo {
+                                currentPage
+                                hasNextPage
+                            }
+                            media(type: ANIME,\s
+                                averageScore_greater: $averageScoreGreater,\s
+                                sort: SCORE,
+                                status_in: [FINISHED, RELEASING]
+                            ) {
+                                id
+                                title {
+                                    english
+                                    romaji
+                                    native
+                                }
+                                episodes
+                                startDate {
+                                    year
+                                    month
+                                    day
+                                }
+                                endDate {
+                                    year
+                                    month
+                                    day
+                                }
+                                genres
+                                averageScore
+                                characters(sort: ROLE) {
+                                    nodes {
+                                        id
+                                        name {
+                                            full
+                                            native
+                                        }
+                                        gender
+                                        age
+                                        dateOfBirth {
+                                            year
+                                            month
+                                            day
+                                        }
+                                        image {
+                                            large
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        media(type: ANIME, averageScore_greater: $averageScoreGreater, sort: SCORE) {
-                          title {
-                            english
-                            romaji
-                            native
-                          }
-                          episodes
-                          startDate {
-                            year
-                            month
-                            day
-                          }
-                          endDate {
-                            year
-                            month
-                            day
-                          }
-                          genres
-                          averageScore
-                        }
-                      }
                     }
                     """;
 
@@ -186,4 +210,42 @@ public class AnimeClient {
     }
 
     //todo: get the characters that feature in each anime
+
+    public List<MediaDto> animyByAverageScoreAndCharactersTest(Integer score) {
+        List<MediaDto> allMediaDto = new ArrayList<>();
+        boolean hasNextPage = true;
+        int currentPage = 1;
+        int totalProcessedMedia = 0;
+
+        while (hasNextPage) {
+            log.info("Fetching page {} of anime", currentPage);
+
+            //language=GraphQL
+            String query = """
+                   
+                    """;
+
+            PageDto pageDtoResponse = graphQlClient.document(query)
+                    .variable("page", currentPage)
+                    .variable("averageScoreGreater", score)
+                    .retrieve("Page")
+                    .toEntity(PageDto.class).block();
+
+            if (pageDtoResponse != null && pageDtoResponse.mediaList() != null) {
+                totalProcessedMedia += pageDtoResponse.mediaList().size();
+                allMediaDto.addAll(pageDtoResponse.mediaList());
+                hasNextPage = pageDtoResponse.pageInfo().hasNextPage();
+
+                log.info("Processed page {} with {} entries. Total processed media: {}", currentPage, pageDtoResponse.mediaList().size(), totalProcessedMedia);
+
+                currentPage++;
+            } else {
+                log.warn("No mediaDto found for page {}. Stopping pagination", currentPage);
+                hasNextPage = false;
+            }
+        }
+
+        log.info("Completed fetching anime. Total processed media: {}", allMediaDto.size());
+        return allMediaDto;
+    }
 }

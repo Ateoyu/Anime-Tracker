@@ -21,4 +21,6 @@ public class MediaDto {
     @JsonProperty("endDate")
     private DateDto endDate;
     private List<String> genres;
+    private Integer averageScore;
+    private CharactersConnection characters;
 }
