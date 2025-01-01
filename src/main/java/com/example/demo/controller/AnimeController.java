@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.client.AnimeClient;
 import com.example.demo.dto.MediaDto;
+import com.example.demo.model.Media;
+import com.example.demo.service.MediaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 public class AnimeController {
 
     private final AnimeClient animeClient;
+    private final MediaService mediaService;
 
     @GetMapping("/getMedia/id/{mediaId}")
     public ResponseEntity<MediaDto> getMedia(@PathVariable Integer mediaId) {
@@ -37,5 +40,10 @@ public class AnimeController {
     @GetMapping("/getMedia/test/{score}")
     public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreaterTest(@PathVariable Integer score) {
         return new ResponseEntity<>(animeClient.animyByAverageScoreAndCharactersTest(score), HttpStatus.OK);
+    }
+
+    @GetMapping("/getMedia/properServiceTest/id/{mediaId}")
+    public ResponseEntity<Media> getMediaProperServiceTest(@PathVariable Integer mediaId) {
+        return new ResponseEntity<>(mediaService.getMediaById(mediaId), HttpStatus.OK);
     }
 }

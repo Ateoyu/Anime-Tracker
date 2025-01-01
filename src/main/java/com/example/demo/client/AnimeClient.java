@@ -137,8 +137,8 @@ public class AnimeClient {
                                 currentPage
                                 hasNextPage
                             }
-                            media(type: ANIME,\s
-                                averageScore_greater: $averageScoreGreater,\s
+                            media(type: ANIME,
+                                averageScore_greater: $averageScoreGreater,
                                 sort: SCORE,
                                 status_in: [FINISHED, RELEASING]
                             ) {
