@@ -1,19 +1,21 @@
 package com.example.demo.service;
 
 import com.example.demo.client.AnimeClient;
+import com.example.demo.dto.CharacterDto;
 import com.example.demo.dto.DateDto;
 import com.example.demo.dto.MediaDto;
-import com.example.demo.model.Date;
-import com.example.demo.model.Genre;
-import com.example.demo.model.Media;
-import com.example.demo.model.Title;
+import com.example.demo.dto.NameDto;
+import com.example.demo.model.Character;
+import com.example.demo.model.*;
 import com.example.demo.repository.AnimeRepository;
+import com.example.demo.repository.CharacterRepository;
 import com.example.demo.repository.GenreRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,31 +28,62 @@ public class MediaService {
     private final AnimeClient animeClient;
     private final AnimeRepository animeRepository;
     private final GenreRepository genreRepository;
+    private final CharacterRepository characterRepository;
 
-    public Media getMediaById(int id) {
-        Optional<Media> media = animeRepository.findById(id);
+    @Transactional
+    public Media getMediaById(Integer anilistId) {
+        Optional<Media> media = animeRepository.findByAnilistId(anilistId);
+        
         if (media.isPresent()) {
-            log.info("Found media with id {} in local database", id);
+            log.info("Found media with AniList id {} in local database", anilistId);
             return media.get();
         }
 
-        MediaDto mediaDto = animeClient.viewMedia(id);
+        MediaDto mediaDto = animeClient.viewMedia(anilistId);
         return saveMediaFromDto(mediaDto);
     }
 
-    //todo: handle mapping and saving the characters to the DB.
+    //todo: figure out why i get a ConcurrentModificationException when trying to add more than just 1 anime into the DB.
     private Media saveMediaFromDto(MediaDto mediaDto) {
         Media media = Media.builder()
-                .id(mediaDto.id())
+                .anilistId(mediaDto.id())
                 .title(mapTitle(mediaDto))
                 .episodes(mediaDto.episodes())
                 .averageScore(mediaDto.averageScore())
                 .startDate(mapDate(mediaDto.startDate()))
                 .endDate(mapDate(mediaDto.endDate()))
                 .genres(mapGenres(mediaDto))
+                .characters(mapCharacters(mediaDto))
                 .build();
 
         return animeRepository.save(media);
+    }
+
+    private Set<Character> mapCharacters(MediaDto mediaDto) {
+        return mediaDto.characters().list().stream()
+                .map(this::getOrCreateCharacter)
+                .collect(Collectors.toSet());
+    }
+
+    private Character getOrCreateCharacter(CharacterDto characterDto) {
+        return characterRepository.findByAnilistId(characterDto.id())
+                .orElseGet(() -> {
+                    Character character = Character.builder()
+                            .anilistId(characterDto.id())
+                            .name(mapName(characterDto.name()))
+                            .gender(characterDto.gender())
+                            .age(characterDto.age())
+                            .dateOfBirth(mapDate(characterDto.dateOfBirth()))
+                            .imageUrl(characterDto.image().large())
+                            .mediaAppearances(new HashSet<>())
+                            .build();
+
+                    return characterRepository.save(character);
+                });
+    }
+
+    private Name mapName(NameDto name) {
+        return new Name(name.full(), name.local());
     }
 
     private Set<Genre> mapGenres(MediaDto mediaDto) {
@@ -61,7 +94,7 @@ public class MediaService {
 
     private Genre getOrCreateGenre(String genreName) {
         return genreRepository.findByName(genreName)
-                .orElseGet(() -> genreRepository.save(Genre.builder().name(genreName).build())) ;
+                .orElseGet(() -> genreRepository.save(Genre.builder().name(genreName).build()));
     }
 
 

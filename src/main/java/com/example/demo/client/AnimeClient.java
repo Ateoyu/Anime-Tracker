@@ -20,8 +20,9 @@ public class AnimeClient {
     public MediaDto viewMedia(Integer animeId) {
         //language=GraphQL
         String query = """
-                query Query($mediaId: Int) {
+                query animeByMediaId($mediaId: Int) {
                     Media(type: ANIME, id: $mediaId) {
+                        id
                         title {
                             english
                             romaji
@@ -39,7 +40,26 @@ public class AnimeClient {
                             day
                         }
                         genres
-                         averageScore
+                        averageScore
+                        characters(sort: ROLE) {
+                            nodes {
+                                id
+                                name {
+                                    full
+                                    native
+                                }
+                                gender
+                                age
+                                dateOfBirth {
+                                    year
+                                    month
+                                    day
+                                }
+                                image {
+                                    large
+                                }
+                            }
+                        }
                     }
                 }""";
 

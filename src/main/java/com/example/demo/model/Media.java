@@ -19,6 +19,9 @@ public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "anilist_id", unique = true)
+    private Integer anilistId;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "title_id")
     private Title title;
