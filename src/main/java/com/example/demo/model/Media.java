@@ -1,10 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -13,6 +10,8 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"characters", "genres"})
+@ToString(exclude = {"characters", "genres"})
 @Table(name = "media")
 public class Media {
     @Id
@@ -30,33 +29,33 @@ public class Media {
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "year", column = @Column(name = "start_year")),
-        @AttributeOverride(name = "month", column = @Column(name = "start_month")),
-        @AttributeOverride(name = "day", column = @Column(name = "start_day"))
+            @AttributeOverride(name = "year", column = @Column(name = "start_year")),
+            @AttributeOverride(name = "month", column = @Column(name = "start_month")),
+            @AttributeOverride(name = "day", column = @Column(name = "start_day"))
     })
     private Date startDate;
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "year", column = @Column(name = "end_year")),
-        @AttributeOverride(name = "month", column = @Column(name = "end_month")),
-        @AttributeOverride(name = "day", column = @Column(name = "end_day"))
+            @AttributeOverride(name = "year", column = @Column(name = "end_year")),
+            @AttributeOverride(name = "month", column = @Column(name = "end_month")),
+            @AttributeOverride(name = "day", column = @Column(name = "end_day"))
     })
     private Date endDate;
 
     @ManyToMany
     @JoinTable(
-        name = "media_genres",
-        joinColumns = @JoinColumn(name = "media_id"),
-        inverseJoinColumns = @JoinColumn(name = "genre_id")
+            name = "media_genres",
+            joinColumns = @JoinColumn(name = "media_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres;
 
     @ManyToMany
     @JoinTable(
-        name = "media_characters",
-        joinColumns = @JoinColumn(name = "media_id"),
-        inverseJoinColumns = @JoinColumn(name = "character_id")
+            name = "media_characters",
+            joinColumns = @JoinColumn(name = "media_id"),
+            inverseJoinColumns = @JoinColumn(name = "character_id")
     )
     private Set<Character> characters;
 

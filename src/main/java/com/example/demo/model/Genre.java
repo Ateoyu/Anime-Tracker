@@ -1,18 +1,18 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Set;
 
 @Entity
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(exclude = "media")
+@ToString(exclude = "media")
 @Table(name = "genres")
 public class Genre {
     @Id
@@ -24,4 +24,8 @@ public class Genre {
 
     @ManyToMany(mappedBy = "genres")
     private Set<Media> media;
+
+    public Genre(String genreName) {
+        this.name = genreName;
+    }
 }

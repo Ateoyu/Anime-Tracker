@@ -1,10 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -13,6 +10,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "mediaAppearances")
+@ToString(exclude = "mediaAppearances")
 @Table(name = "characters")
 public class Character {
     @Id
@@ -29,6 +28,11 @@ public class Character {
     private String age;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "year", column = @Column(name = "dob_year")),
+            @AttributeOverride(name = "month", column = @Column(name = "dob_month")),
+            @AttributeOverride(name = "day", column = @Column(name = "dob_day"))
+    })
     private Date dateOfBirth;
 
     private String imageUrl;

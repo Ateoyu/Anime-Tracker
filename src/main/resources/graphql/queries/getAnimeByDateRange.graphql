@@ -23,6 +23,26 @@ query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLe
                 day
             }
             genres
+            averageScore
+            characters(sort: ROLE) {
+                nodes {
+                    id
+                    name {
+                        full
+                        native
+                    }
+                    gender
+                    age
+                    dateOfBirth {
+                        year
+                        month
+                        day
+                    }
+                    image {
+                        large
+                    }
+                }
+            }
         }
     }
 }

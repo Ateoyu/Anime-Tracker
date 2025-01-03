@@ -22,8 +22,8 @@ public class AnimeController {
     private final MediaService mediaService;
 
     @GetMapping("/getMedia/id/{mediaId}")
-    public ResponseEntity<MediaDto> getMedia(@PathVariable Integer mediaId) {
-        return new ResponseEntity<>(animeClient.viewMedia(mediaId), HttpStatus.OK);
+    public ResponseEntity<Media> getMediaById(@PathVariable Integer mediaId) {
+        return new ResponseEntity<>(mediaService.getMediaById(mediaId), HttpStatus.OK);
     }
 
     @GetMapping("/getMedia/dateRange/{fromDate}/{toDate}")
@@ -39,11 +39,14 @@ public class AnimeController {
 
     @GetMapping("/getMedia/test/{score}")
     public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreaterTest(@PathVariable Integer score) {
-        return new ResponseEntity<>(animeClient.animyByAverageScoreAndCharactersTest(score), HttpStatus.OK);
+        return new ResponseEntity<>(animeClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
     }
 
-    @GetMapping("/getMedia/properServiceTest/id/{mediaId}")
-    public ResponseEntity<Media> getMediaProperServiceTest(@PathVariable Integer mediaId) {
-        return new ResponseEntity<>(mediaService.getMediaById(mediaId), HttpStatus.OK);
+    //    PROPERLY DONE CONTROLLER ENDPOINTS:
+
+    @GetMapping("/getMedia/properServiceTest/dateRange/{fromDate}/{toDate}")
+    public ResponseEntity<List<Media>> getMediaFromDateTest(@PathVariable Integer fromDate, @PathVariable Integer toDate) {
+        return new ResponseEntity<>(mediaService.getMediaByDateRange(fromDate, toDate), HttpStatus.OK);
     }
 }
+

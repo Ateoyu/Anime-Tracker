@@ -111,13 +111,33 @@ public class AnimeClient {
                                 }
                                 genres
                                 averageScore
+                                characters(sort: ROLE) {
+                                    nodes {
+                                        id
+                                        name {
+                                            full
+                                            native
+                                        }
+                                        gender
+                                        age
+                                        dateOfBirth {
+                                            year
+                                            month
+                                            day
+                                        }
+                                        image {
+                                            large
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }""";
+                    }
+                    """;
 
             PageDto pageDtoResponse = graphQlClient.document(query)
-                    .variable("from", from)
-                    .variable("to", to)
+                    .variable("startDateGreater", from)
+                    .variable("startDateLesser", to)
                     .variable("page", currentPage)
                     .retrieve("Page")
                     .toEntity(PageDto.class).block();
@@ -151,7 +171,7 @@ public class AnimeClient {
 
             //language=GraphQL
             String query = """
-                    query getAnimeCharacters($page: Int, $averageScoreGreater: Int) {
+                    query animeByAverageScoreGreaterThan($page: Int, $averageScoreGreater: Int) {
                         Page(page: $page, perPage: 50) {
                             pageInfo {
                                 currentPage
@@ -230,42 +250,4 @@ public class AnimeClient {
     }
 
     //todo: get the characters that feature in each anime
-
-    public List<MediaDto> animyByAverageScoreAndCharactersTest(Integer score) {
-        List<MediaDto> allMediaDto = new ArrayList<>();
-        boolean hasNextPage = true;
-        int currentPage = 1;
-        int totalProcessedMedia = 0;
-
-        while (hasNextPage) {
-            log.info("Fetching page {} of anime", currentPage);
-
-            //language=GraphQL
-            String query = """
-                   
-                    """;
-
-            PageDto pageDtoResponse = graphQlClient.document(query)
-                    .variable("page", currentPage)
-                    .variable("averageScoreGreater", score)
-                    .retrieve("Page")
-                    .toEntity(PageDto.class).block();
-
-            if (pageDtoResponse != null && pageDtoResponse.mediaList() != null) {
-                totalProcessedMedia += pageDtoResponse.mediaList().size();
-                allMediaDto.addAll(pageDtoResponse.mediaList());
-                hasNextPage = pageDtoResponse.pageInfo().hasNextPage();
-
-                log.info("Processed page {} with {} entries. Total processed media: {}", currentPage, pageDtoResponse.mediaList().size(), totalProcessedMedia);
-
-                currentPage++;
-            } else {
-                log.warn("No mediaDto found for page {}. Stopping pagination", currentPage);
-                hasNextPage = false;
-            }
-        }
-
-        log.info("Completed fetching anime. Total processed media: {}", allMediaDto.size());
-        return allMediaDto;
-    }
 }
