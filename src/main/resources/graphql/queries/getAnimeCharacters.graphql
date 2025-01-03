@@ -1,10 +1,14 @@
-query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLesser: FuzzyDateInt) {
+query getAnimeCharacters($page: Int, $averageScoreGreater: Int) {
     Page(page: $page, perPage: 50) {
         pageInfo {
             currentPage
             hasNextPage
         }
-        media(type: ANIME, startDate_greater: $startDateGreater, startDate_lesser: $startDateLesser, sort: START_DATE) {
+        media(type: ANIME,
+            averageScore_greater: $averageScoreGreater,
+            sort: SCORE,
+            status_in: [FINISHED, RELEASING]
+        ) {
             id
             title {
                 english

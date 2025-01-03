@@ -1,19 +1,23 @@
 package com.example.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class TitleDto {
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+//public class TitleDto {
+//
+//    private String english;
+//    private String romaji;
+//    @JsonProperty("native")
+//    private String local;
+//}
 
-    private String english;
-    private String romaji;
-    @JsonProperty("native")
-    private String local;
+public record TitleDto(
+        String english,
+        String romaji,
+        @JsonProperty("native")
+        String local
+) {
 }

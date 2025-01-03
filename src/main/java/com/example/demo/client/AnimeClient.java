@@ -20,8 +20,9 @@ public class AnimeClient {
     public MediaDto viewMedia(Integer animeId) {
         //language=GraphQL
         String query = """
-                query Query($mediaId: Int) {
+                query animeByMediaId($mediaId: Int) {
                     Media(type: ANIME, id: $mediaId) {
+                        id
                         title {
                             english
                             romaji
@@ -39,7 +40,26 @@ public class AnimeClient {
                             day
                         }
                         genres
-                         averageScore
+                        averageScore
+                        characters(sort: ROLE) {
+                            nodes {
+                                id
+                                name {
+                                    full
+                                    native
+                                }
+                                gender
+                                age
+                                dateOfBirth {
+                                    year
+                                    month
+                                    day
+                                }
+                                image {
+                                    large
+                                }
+                            }
+                        }
                     }
                 }""";
 
@@ -91,13 +111,33 @@ public class AnimeClient {
                                 }
                                 genres
                                 averageScore
+                                characters(sort: ROLE) {
+                                    nodes {
+                                        id
+                                        name {
+                                            full
+                                            native
+                                        }
+                                        gender
+                                        age
+                                        dateOfBirth {
+                                            year
+                                            month
+                                            day
+                                        }
+                                        image {
+                                            large
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }""";
+                    }
+                    """;
 
             PageDto pageDtoResponse = graphQlClient.document(query)
-                    .variable("from", from)
-                    .variable("to", to)
+                    .variable("startDateGreater", from)
+                    .variable("startDateLesser", to)
                     .variable("page", currentPage)
                     .retrieve("Page")
                     .toEntity(PageDto.class).block();
@@ -132,32 +172,56 @@ public class AnimeClient {
             //language=GraphQL
             String query = """
                     query animeByAverageScoreGreaterThan($page: Int, $averageScoreGreater: Int) {
-                      Page(page: $page, perPage: 50) {
-                        pageInfo {
-                          currentPage
-                          hasNextPage
+                        Page(page: $page, perPage: 50) {
+                            pageInfo {
+                                currentPage
+                                hasNextPage
+                            }
+                            media(type: ANIME,
+                                averageScore_greater: $averageScoreGreater,
+                                sort: SCORE,
+                                status_in: [FINISHED, RELEASING]
+                            ) {
+                                id
+                                title {
+                                    english
+                                    romaji
+                                    native
+                                }
+                                episodes
+                                startDate {
+                                    year
+                                    month
+                                    day
+                                }
+                                endDate {
+                                    year
+                                    month
+                                    day
+                                }
+                                genres
+                                averageScore
+                                characters(sort: ROLE) {
+                                    nodes {
+                                        id
+                                        name {
+                                            full
+                                            native
+                                        }
+                                        gender
+                                        age
+                                        dateOfBirth {
+                                            year
+                                            month
+                                            day
+                                        }
+                                        image {
+                                            large
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        media(type: ANIME, averageScore_greater: $averageScoreGreater, sort: SCORE) {
-                          title {
-                            english
-                            romaji
-                            native
-                          }
-                          episodes
-                          startDate {
-                            year
-                            month
-                            day
-                          }
-                          endDate {
-                            year
-                            month
-                            day
-                          }
-                          genres
-                          averageScore
-                        }
-                      }
                     }
                     """;
 
