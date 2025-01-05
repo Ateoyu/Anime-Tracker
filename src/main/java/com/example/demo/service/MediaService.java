@@ -46,9 +46,16 @@ public class MediaService {
         return Collections.emptyList();
     }
 
-    public List<Media> getMediaByPage(Integer page, Integer size) {
+    public Page<Media> getMediaByPage(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Media> PagesOfMedia = animeRepository.findAll(pageRequest);
-        return PagesOfMedia.getContent();
+        return animeRepository.findAll(pageRequest);
+    }
+
+    public List<Integer> getAllAnimeReleaseYear() {
+        return animeRepository.getAllMediaYears();
+    }
+
+    public List<Integer> getAllAnimeEpisodes() {
+        return animeRepository.getAllMediaEpisodes();
     }
 }

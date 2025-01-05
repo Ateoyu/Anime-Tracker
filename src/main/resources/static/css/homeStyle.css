@@ -11,6 +11,8 @@ body {
     height: 100%;
     box-shadow: 0 5px 10px grey;
     align-items: center;
+    background: #19212C;
+    color: white;
 }
 
 .websiteLogo {

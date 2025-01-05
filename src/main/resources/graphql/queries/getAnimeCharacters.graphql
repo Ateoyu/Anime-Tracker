@@ -7,7 +7,7 @@ query getAnimeCharacters($page: Int, $averageScoreGreater: Int) {
         media(type: ANIME,
             averageScore_greater: $averageScoreGreater,
             sort: SCORE,
-            status_in: [FINISHED, RELEASING]
+
         ) {
             id
             title {

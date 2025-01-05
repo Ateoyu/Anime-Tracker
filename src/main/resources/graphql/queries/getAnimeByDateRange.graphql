@@ -4,7 +4,12 @@ query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLe
             currentPage
             hasNextPage
         }
-        media(type: ANIME, startDate_greater: $startDateGreater, startDate_lesser: $startDateLesser, sort: START_DATE) {
+        media(type: ANIME,
+            startDate_greater: $startDateGreater,
+            startDate_lesser: $startDateLesser,
+            status_in: [FINISHED, RELEASING]
+            sort: START_DATE,
+            isAdult: false) {
             id
             title {
                 english
@@ -25,7 +30,7 @@ query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLe
             genres
             averageScore
             coverImage {
-                medium
+                large
             }
             characters(sort: ROLE) {
                 nodes {

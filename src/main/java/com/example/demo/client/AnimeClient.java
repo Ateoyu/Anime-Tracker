@@ -21,7 +21,7 @@ public class AnimeClient {
         //language=GraphQL
         String query = """
                 query animeByMediaId($mediaId: Int) {
-                    Media(type: ANIME, id: $mediaId) {
+                    Media(type: ANIME, id: $mediaId, isAdult: false, status_in: [FINISHED, RELEASING]) {
                         id
                         title {
                             english
@@ -41,6 +41,9 @@ public class AnimeClient {
                         }
                         genres
                         averageScore
+                        coverImage {
+                            large
+                        }
                         characters(sort: ROLE) {
                             nodes {
                                 id
@@ -61,7 +64,8 @@ public class AnimeClient {
                             }
                         }
                     }
-                }""";
+                }
+                """;
 
         MediaDto mediaDto = graphQlClient.document(query)
                 .variable("mediaId", animeId)
@@ -91,7 +95,12 @@ public class AnimeClient {
                                 currentPage
                                 hasNextPage
                             }
-                            media(type: ANIME, startDate_greater: $startDateGreater, startDate_lesser: $startDateLesser, sort: START_DATE) {
+                            media(type: ANIME,
+                                startDate_greater: $startDateGreater,
+                                startDate_lesser: $startDateLesser,
+                                status_in: [FINISHED, RELEASING]
+                                sort: START_DATE,
+                                isAdult: false) {
                                 id
                                 title {
                                     english
@@ -112,7 +121,7 @@ public class AnimeClient {
                                 genres
                                 averageScore
                                 coverImage {
-                                    medium
+                                    large
                                 }
                                 characters(sort: ROLE) {
                                     nodes {

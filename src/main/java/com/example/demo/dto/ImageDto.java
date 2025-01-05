@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 public record ImageDto(
-        String large,
-        String medium
+        String large
 ) {
 }

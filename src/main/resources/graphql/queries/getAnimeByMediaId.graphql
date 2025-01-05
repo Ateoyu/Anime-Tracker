@@ -1,5 +1,5 @@
 query animeByMediaId($mediaId: Int) {
-    Media(type: ANIME, id: $mediaId) {
+    Media(type: ANIME, id: $mediaId, isAdult: false, status_in: [FINISHED, RELEASING]) {
         id
         title {
             english
@@ -19,6 +19,9 @@ query animeByMediaId($mediaId: Int) {
         }
         genres
         averageScore
+        coverImage {
+            large
+        }
         characters(sort: ROLE) {
             nodes {
                 id
