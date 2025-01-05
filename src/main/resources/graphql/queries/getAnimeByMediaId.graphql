@@ -22,6 +22,8 @@ query animeByMediaId($mediaId: Int) {
         coverImage {
             large
         }
+        bannerImage
+        description
         characters(sort: ROLE) {
             nodes {
                 id

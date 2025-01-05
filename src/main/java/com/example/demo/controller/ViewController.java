@@ -26,7 +26,7 @@ public class ViewController {
 
     @GetMapping("/browse")
     public String browse(@RequestParam(defaultValue = "0") int page, Model model) {
-        Page<Media> mediaList = mediaService.getMediaByPage(page, 24);
+        Page<Media> mediaList = mediaService.getMediaByPage(page, 50);
         model.addAttribute("mediaList", mediaList.getContent());
         model.addAttribute("genres", genreService.getAllGenres());
         model.addAttribute("years", mediaService.getAllAnimeReleaseYear());
@@ -34,13 +34,6 @@ public class ViewController {
         model.addAttribute("currentPage", page);
         model.addAttribute("hasNext", mediaList.hasNext());
         return "browse";
-    }
-
-    @GetMapping("/browse/next")
-    public String loadMoreAnime(@RequestParam int page, Model model) {
-        Page<Media> mediaList = mediaService.getMediaByPage(page, 24);
-        model.addAttribute("mediaList", mediaList.getContent());
-        return "browse :: animeGrid";
     }
 
     @GetMapping("/anime/{id}")

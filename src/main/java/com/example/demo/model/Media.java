@@ -27,6 +27,9 @@ public class Media {
     private Integer episodes;
     private Integer averageScore;
     private String coverImage;
+    private String bannerImage;
+    @Column(columnDefinition = "LONGTEXT")
+    private String description;
 
     @Embedded
     @AttributeOverrides({

@@ -2,13 +2,52 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${media.title.english ?: ${media.title.romaji}}"></title>
+    <title th:text="${media.title.english} ?: ${media.title.romaji}"></title>
+    <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/mediaView.css}">
 
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
 
+<header th:replace="home :: mainHeader"></header>
 
+<div id="bannerAndInfoWrapper">
+    <div id="banner" th:style="'background-image: url('+ ${media.bannerImage} +')'"></div>
+
+    <div id="info">
+        <div class="infoContainer">
+            <div class="cover-wrap-overlap-banner">
+                <div class="cover-wrap-inner">
+                    <img th:src="${media.coverImage}" class="cover-image" alt="coverImage">
+
+                    <div class="actions">
+                        <select>
+                            <option value="" selected="selected"></option>
+                        </select>
+                        <button hx-post="">Post</button>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="content">
+                <h1 th:text="${media.title.english} ?: ${media.title.romaji}"></h1>
+                <h3 th:text="${media.title.local}"></h3>
+                <p th:text="${media.description}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mediaDataContainer">
+
+</div>
+
+
+<footer th:replace="footer :: footer"></footer>
 
 </body>
 </html>

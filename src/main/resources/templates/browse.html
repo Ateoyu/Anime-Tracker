@@ -11,9 +11,6 @@
     <script src="https://unpkg.com/htmx.org@2.0.4"
             integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
             crossorigin="anonymous"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
@@ -45,7 +42,7 @@
     </ul>
 
     <main id="mainGridContainer">
-        <div class="animeDiv" th:each="anime, iter: ${mediaList}">
+        <a  th:href="${'/anime/' + anime.anilistId}" class="animeDiv" th:each="anime, iter: ${mediaList}">
             <div class="animeThumbnail">
                 <img th:src="${anime.coverImage}" alt="coverImage">
             </div>
@@ -53,7 +50,7 @@
                 <h3 th:if="${anime.title.english != null}" th:text="${anime.title.english}">Title</h3>
                 <h3 th:if="${anime.title.english == null}" th:text="${anime.title.romaji}">Title</h3>
             </div>
-        </div>
+        </a>
     </main>
 </div>
 

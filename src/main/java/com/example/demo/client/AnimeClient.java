@@ -44,6 +44,8 @@ public class AnimeClient {
                         coverImage {
                             large
                         }
+                        bannerImage
+                        description
                         characters(sort: ROLE) {
                             nodes {
                                 id
@@ -123,6 +125,8 @@ public class AnimeClient {
                                 coverImage {
                                     large
                                 }
+                                bannerImage
+                                description
                                 characters(sort: ROLE) {
                                     nodes {
                                         id

@@ -63,7 +63,7 @@ body {
     position: relative;
     display: grid;
     box-shadow: 2px 2px 4px #061120;;
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
 }
 

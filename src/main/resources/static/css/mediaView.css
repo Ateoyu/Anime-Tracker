@@ -1,0 +1,56 @@
+#banner {
+    height: 400px;
+    background-size: cover;
+    background: no-repeat 50% 35%;
+}
+
+#info {
+    position: relative;
+    background: #151f2d;
+}
+
+.infoContainer {
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: 215px auto;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.cover-wrap-overlap-banner {
+    position: relative;
+    margin-top: -125px;
+}
+
+.cover-image {
+    border-radius: 8px;
+    box-shadow: 0 0 29px rgba(49,54,68,.25);
+    margin-top: 15px;
+    width: 100%;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: auto 50px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    grid-gap: 15px;
+}
+
+.content {
+    h1, h3, p {
+        color: rgba(159, 173, 189, 1);
+    }
+
+    h1 {
+        margin-bottom: 0;
+    }
+
+    h3 {
+        margin: 0;
+    }
+}
+
+.mediaDataContainer {
+
+}
