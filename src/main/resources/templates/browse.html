@@ -5,10 +5,15 @@
     <title>Browse Anime</title>
     <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
     <link th:rel="stylesheet" th:href="@{/css/browseGrid.css}">
+    <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+
 
     <script src="https://unpkg.com/htmx.org@2.0.4"
             integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
             crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -31,7 +36,7 @@
             </select>
         </li>
         <li>
-            <label for="episodeFilter">Release Year</label>
+            <label for="episodeFilter">Episode</label>
             <select name="episodeFilter" id="episodeFilter">
                 <option value="All">All</option>
                 <option th:each="episodeNum : ${episodes}" th:text="${episodeNum}" th:value="${episodeNum}"></option>
@@ -51,6 +56,8 @@
         </div>
     </main>
 </div>
+
+<footer th:replace="footer :: footer"></footer>
 
 
 </body>
