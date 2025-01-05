@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 
@@ -11,6 +13,8 @@ public record MediaDto(
         DateDto endDate,
         List<String> genres,
         Integer averageScore,
+        @JsonProperty("coverImage")
+        ImageDto image,
         CharactersConnection characters
 ) {
 }

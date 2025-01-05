@@ -111,6 +111,9 @@ public class AnimeClient {
                                 }
                                 genres
                                 averageScore
+                                coverImage {
+                                    medium
+                                }
                                 characters(sort: ROLE) {
                                     nodes {
                                         id

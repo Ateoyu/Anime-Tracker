@@ -11,6 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface AnimeRepository extends JpaRepository<Media, Integer> {
+
+
     Optional<Media> findByAnilistId(Integer anilistId);
 
     @Query("SELECT m FROM Media m WHERE " +

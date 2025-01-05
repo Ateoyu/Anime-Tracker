@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse Anime</title>
+  <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+  <link th:rel="stylesheet" th:href="@{/css/browseGrid.css}">
+
+  <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header id="headerGridContainer">
+  <img class="websiteLogo" th:src="@{/images/aniListLogo.png}" alt="Website Logo">
+  <h1>Home</h1>
+  <h1>Profile</h1>
+  <h1>My Anime List</h1>
+  <h1>Browse</h1>
+</header>
+
+<main id="mainGridContainer">
+  <div class="animeDiv" th:each="anime, iter: ${pagedMedia}">
+    <div class="animeThumbnail">
+      <img th:src="${anime.coverImage}" alt="coverImage">
+    </div>
+    <div class="animeText">
+      <h3 th:if="${anime.title.english != null}" th:text="${anime.title.english}">Title</h3>
+      <h3 th:if="${anime.title.english == null}" th:text="${anime.title.romaji}">Title</h3>
+    </div>
+  </div>
+</main>
+
+
+</body>
+</html>

@@ -7,6 +7,8 @@ import com.example.demo.repository.AnimeRepository;
 import com.example.demo.service.mapper.MediaMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,12 +38,17 @@ public class MediaService {
     public List<Media> getMediaByDateRange(Integer fromDate, Integer toDate) {
 //        List<Media> mediaList = animeRepository.findByDateRange(fromDate, toDate);
 
-
         List<MediaDto> apiMediaList = animeClient.getAnimeByDateRange(fromDate, toDate);
         for (MediaDto mediaDto : apiMediaList) {
             animeRepository.save(mediaMapper.toEntity(mediaDto));
         }
 
         return Collections.emptyList();
+    }
+
+    public List<Media> getMediaByPage(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Media> PagesOfMedia = animeRepository.findAll(pageRequest);
+        return PagesOfMedia.getContent();
     }
 }

@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+}
+
+#headerGridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 75px;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 5px 10px grey;
+    align-items: center;
+}
+
+.websiteLogo {
+    object-fit: contain;
+    max-height: 100%;
+    justify-self: start;
+}
+

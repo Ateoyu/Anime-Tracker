@@ -1,0 +1,51 @@
+#mainGridContainer {
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: auto;
+
+
+    padding: 30px;
+    justify-content: center;
+    gap: 20px;
+}
+
+.animeDiv {
+    position: relative;
+    display: grid;
+    box-shadow: 2px 2px 4px grey;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.animeThumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.animeText {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+
+    background: linear-gradient(to top, black, transparent 50%);
+
+
+    padding: 0 10px 10px 10px;
+    h3 {
+        margin: 0;
+    }
+}
+
+.animeThumbnail,
+.animeText {
+    grid-area: 1/-1;
+}

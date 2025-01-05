@@ -28,6 +28,7 @@ public class MediaMapper implements EntityMapper<Media, MediaDto> {
         Media media = Media.builder()
                 .anilistId(dto.id())
                 .title(titleMapper.toEntity(dto.title()))
+                .coverImage(dto.image().medium())
                 .episodes(dto.episodes())
                 .averageScore(dto.averageScore())
                 .startDate(dateMapper.toEntity(dto.startDate()))

@@ -26,6 +26,7 @@ public class Media {
     private Title title;
     private Integer episodes;
     private Integer averageScore;
+    private String coverImage;
 
     @Embedded
     @AttributeOverrides({
@@ -58,6 +59,7 @@ public class Media {
             inverseJoinColumns = @JoinColumn(name = "character_id")
     )
     private Set<Character> characters;
+
 
 
 }

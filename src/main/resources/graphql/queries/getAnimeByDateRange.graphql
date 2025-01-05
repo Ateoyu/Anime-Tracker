@@ -24,6 +24,9 @@ query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLe
             }
             genres
             averageScore
+            coverImage {
+                medium
+            }
             characters(sort: ROLE) {
                 nodes {
                     id
