@@ -23,7 +23,7 @@ query animeByMediaId($mediaId: Int) {
             large
         }
         bannerImage
-        description
+        description(asHtml: false)
         characters(sort: ROLE) {
             nodes {
                 id

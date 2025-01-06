@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.client.AnimeClient;
+import com.example.demo.client.MediaClient;
 import com.example.demo.dto.MediaDto;
 import com.example.demo.model.Media;
 import com.example.demo.service.MediaService;
@@ -16,9 +16,9 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-public class AnimeController {
+public class MediaController {
 
-    private final AnimeClient animeClient;
+    private final MediaClient mediaClient;
     private final MediaService mediaService;
 
     @GetMapping("/getMedia/id/{mediaId}")
@@ -27,26 +27,19 @@ public class AnimeController {
     }
 
     @GetMapping("/getMedia/dateRange/{fromDate}/{toDate}")
-    public ResponseEntity<List<MediaDto>> getMediaFromDate(@PathVariable Integer fromDate, @PathVariable Integer toDate) {
-        return new ResponseEntity<>(animeClient.getAnimeByDateRange(fromDate, toDate), HttpStatus.OK);
+    public ResponseEntity<List<Media>> getMediaFromDate(@PathVariable Integer fromDate, @PathVariable Integer toDate) {
+        return new ResponseEntity<>(mediaService.getMediaByDateRange(fromDate, toDate), HttpStatus.OK);
     }
-
+    
     @GetMapping("/getMedia/averageScoreGreater/{score}")
     public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreater(@PathVariable Integer score) {
-        return new ResponseEntity<>(animeClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
+        return new ResponseEntity<>(mediaClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
     }
 
 
     @GetMapping("/getMedia/test/{score}")
     public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreaterTest(@PathVariable Integer score) {
-        return new ResponseEntity<>(animeClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
-    }
-
-    //    PROPERLY DONE CONTROLLER ENDPOINTS:
-
-    @GetMapping("/getMedia/properServiceTest/dateRange/{fromDate}/{toDate}")
-    public ResponseEntity<List<Media>> getMediaFromDateTest(@PathVariable Integer fromDate, @PathVariable Integer toDate) {
-        return new ResponseEntity<>(mediaService.getMediaByDateRange(fromDate, toDate), HttpStatus.OK);
+        return new ResponseEntity<>(mediaClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
     }
 }
 

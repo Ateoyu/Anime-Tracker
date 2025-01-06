@@ -13,7 +13,7 @@ import java.util.List;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class AnimeClient {
+public class MediaClient {
     private final HttpGraphQlClient graphQlClient;
 
     //todo: ask if I can somehow specify these queries within Resources directory, and call them in here to make the code a lil more organised and navigable.
@@ -45,7 +45,7 @@ public class AnimeClient {
                             large
                         }
                         bannerImage
-                        description
+                        description(asHtml: false)
                         characters(sort: ROLE) {
                             nodes {
                                 id
@@ -77,7 +77,6 @@ public class AnimeClient {
         return mediaDto;
     }
 
-    //todo: figure out why all startDate and endDate is always null, even if it shouldn't be (it works for animeByAverageScore)
     public List<MediaDto> getAnimeByDateRange(Integer from, Integer to) {
         List<MediaDto> allMediaDto = new ArrayList<>();
         boolean hasNextPage = true;
@@ -91,64 +90,64 @@ public class AnimeClient {
 
             //language=GraphQL
             String query = """
-                    query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLesser: FuzzyDateInt) {
-                        Page(page: $page, perPage: 50) {
-                            pageInfo {
-                                currentPage
-                                hasNextPage
-                            }
-                            media(type: ANIME,
-                                startDate_greater: $startDateGreater,
-                                startDate_lesser: $startDateLesser,
-                                status_in: [FINISHED, RELEASING]
-                                sort: START_DATE,
-                                isAdult: false) {
-                                id
-                                title {
-                                    english
-                                    romaji
-                                    native
-                                }
-                                episodes
-                                startDate {
-                                    year
-                                    month
-                                    day
-                                }
-                                endDate {
-                                    year
-                                    month
-                                    day
-                                }
-                                genres
-                                averageScore
-                                coverImage {
-                                    large
-                                }
-                                bannerImage
-                                description
-                                characters(sort: ROLE) {
-                                    nodes {
-                                        id
-                                        name {
-                                            full
-                                            native
-                                        }
-                                        gender
-                                        age
-                                        dateOfBirth {
-                                            year
-                                            month
-                                            day
-                                        }
-                                        image {
-                                            large
-                                        }
-                                    }
-                                }
-                            }
-                        }
+query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLesser: FuzzyDateInt) {
+    Page(page: $page, perPage: 50) {
+        pageInfo {
+            currentPage
+            hasNextPage
+        }
+        media(type: ANIME,
+            startDate_greater: $startDateGreater,
+            startDate_lesser: $startDateLesser,
+            status_in: [FINISHED, RELEASING]
+            sort: START_DATE,
+            isAdult: false) {
+            id
+            title {
+                english
+                romaji
+                native
+            }
+            episodes
+            startDate {
+                year
+                month
+                day
+            }
+            endDate {
+                year
+                month
+                day
+            }
+            genres
+            averageScore
+            coverImage {
+                large
+            }
+            bannerImage
+            description(asHtml: false)
+            characters(sort: ROLE) {
+                nodes {
+                    id
+                    name {
+                        full
+                        native
                     }
+                    gender
+                    age
+                    dateOfBirth {
+                        year
+                        month
+                        day
+                    }
+                    image {
+                        large
+                    }
+                }
+            }
+        }
+    }
+}
                     """;
 
             PageDto pageDtoResponse = graphQlClient.document(query)
@@ -187,58 +186,64 @@ public class AnimeClient {
 
             //language=GraphQL
             String query = """
-                    query animeByAverageScoreGreaterThan($page: Int, $averageScoreGreater: Int) {
-                        Page(page: $page, perPage: 50) {
-                            pageInfo {
-                                currentPage
-                                hasNextPage
-                            }
-                            media(type: ANIME,
-                                averageScore_greater: $averageScoreGreater,
-                                sort: SCORE,
-                                status_in: [FINISHED, RELEASING]
-                            ) {
-                                id
-                                title {
-                                    english
-                                    romaji
-                                    native
-                                }
-                                episodes
-                                startDate {
-                                    year
-                                    month
-                                    day
-                                }
-                                endDate {
-                                    year
-                                    month
-                                    day
-                                }
-                                genres
-                                averageScore
-                                characters(sort: ROLE) {
-                                    nodes {
-                                        id
-                                        name {
-                                            full
-                                            native
-                                        }
-                                        gender
-                                        age
-                                        dateOfBirth {
-                                            year
-                                            month
-                                            day
-                                        }
-                                        image {
-                                            large
-                                        }
-                                    }
-                                }
-                            }
-                        }
+query animeByAverageScoreGreaterThan($page: Int, $averageScoreGreater: Int) {
+    Page(page: $page, perPage: 50) {
+        pageInfo {
+            currentPage
+            hasNextPage
+        }
+        media(type: ANIME,
+            averageScore_greater: $averageScoreGreater,
+            sort: SCORE,
+            status_in: [FINISHED, RELEASING],
+            isAdult: false
+        ) {
+            id
+            title {
+                english
+                romaji
+                native
+            }
+            episodes
+            startDate {
+                year
+                month
+                day
+            }
+            endDate {
+                year
+                month
+                day
+            }
+            genres
+            averageScore
+            coverImage {
+                large
+            }
+            bannerImage
+            description(asHtml: false)
+            characters(sort: ROLE) {
+                nodes {
+                    id
+                    name {
+                        full
+                        native
                     }
+                    gender
+                    age
+                    dateOfBirth {
+                        year
+                        month
+                        day
+                    }
+                    image {
+                        large
+                    }
+                }
+            }
+        }
+    }
+}
                     """;
 
             PageDto pageDtoResponse = graphQlClient.document(query)
@@ -264,6 +269,4 @@ public class AnimeClient {
         log.info("Completed fetching anime. Total processed media: {}", allMediaDto.size());
         return allMediaDto;
     }
-
-    //todo: get the characters that feature in each anime
 }

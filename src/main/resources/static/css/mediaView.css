@@ -1,7 +1,11 @@
+body {
+    background: #0b1621;
+}
+
 #banner {
     height: 400px;
-    background-size: cover;
     background: no-repeat 50% 35%;
+    background-size: cover;
 }
 
 #info {
@@ -38,7 +42,7 @@
 }
 
 .content {
-    h1, h3, p {
+    h1, h2, h3, p {
         color: rgba(159, 173, 189, 1);
     }
 
@@ -46,11 +50,40 @@
         margin-bottom: 0;
     }
 
-    h3 {
+    h2 {
+        margin-top: 5px;
+        margin-bottom: 2px;
+    }
+
+     h3 {
         margin: 0;
     }
 }
 
 .mediaDataContainer {
+    display: grid;
+    grid-column-gap: 40px;
+    grid-template-columns: 208px auto;
+    position: relative;
+    padding-left: 50px;
+    padding-right: 50px;
+}
 
+.mediaData {
+    background: rgb(21,31,46);
+    color: rgba(159, 173, 189, 1);
+    padding: 18px;
+    border-radius: 8px;
+
+}
+
+.data {
+    padding-bottom: 14px;
+
+    dt {
+        font-weight: bold;
+    }
+    dd {
+        margin: 0;
+    }
 }

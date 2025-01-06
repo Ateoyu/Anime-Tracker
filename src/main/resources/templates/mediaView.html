@@ -35,15 +35,35 @@
 
             <div class="content">
                 <h1 th:text="${media.title.english} ?: ${media.title.romaji}"></h1>
+                <h2 th:if="${media.title.english}" th:text="${media.title.romaji}"></h2>
                 <h3 th:text="${media.title.local}"></h3>
-                <p th:text="${media.description}"></p>
+                <p th:text="${media.description}"></p>"
             </div>
         </div>
     </div>
 </div>
 
 <div class="mediaDataContainer">
-
+    <aside>
+        <dl class="mediaData">
+            <div th:if="${media.averageScore}" class="data avgScore">
+                <dt>Average Score</dt>
+                <dd th:text="${media.averageScore}"></dd>
+            </div>
+            <div th:if="${media.episodes}" class="data episodes">
+                <dt>Episodes</dt>
+                <dd th:text="${media.episodes}"></dd>
+            </div>
+            <div th:if="${media.startDate}" class="data starDate">
+                <dt>Start Date</dt>
+                <dd th:text="${media.startDate.day} + '/' + ${media.startDate.month} + '/' + ${media.startDate.year}"></dd>
+            </div>
+            <div th:if="${media.endDate}" class="data endDate">
+                <dt>End Date</dt>
+                <dd th:text="${media.endDate.day} + '/' + ${media.endDate.month} + '/' + ${media.endDate.year}"></dd>
+            </div>
+        </dl>
+    </aside>
 </div>
 
 

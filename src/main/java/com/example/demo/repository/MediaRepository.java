@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AnimeRepository extends JpaRepository<Media, Integer> {
+public interface MediaRepository extends JpaRepository<Media, Integer> {
 
 
     Optional<Media> findByAnilistId(Integer anilistId);
@@ -20,8 +20,6 @@ public interface AnimeRepository extends JpaRepository<Media, Integer> {
             "(m.startDate.year * 10000 + m.startDate.month * 100 + m.startDate.day) " +
             "BETWEEN :fromDate AND :toDate")
     List<Media> findByDateRange(@Param("fromDate") Integer fromDate, @Param("toDate") Integer toDate);
-
-    List<Integer> findAllByStartDate_Year(Integer startDateYear);
 
     @NativeQuery("SELECT DISTINCT start_year FROM media")
     List<Integer> getAllMediaYears();

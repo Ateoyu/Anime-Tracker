@@ -18,6 +18,9 @@
 
 <div class="generalContainer">
     <ul class="animeFilter">
+        <!--todo:
+        For each option from any of the filters,
+        use a HTMX hx:post to pass the filters and replace the anime being displayed-->
         <li>
             <label for="genreFilter">Genres</label>
             <select name="genreFilter" id="genreFilter">
@@ -42,7 +45,7 @@
     </ul>
 
     <main id="mainGridContainer">
-        <a  th:href="${'/anime/' + anime.anilistId}" class="animeDiv" th:each="anime, iter: ${mediaList}">
+        <a th:href="${'/anime/' + anime.anilistId}" class="animeDiv" th:each="anime, iter: ${mediaList}">
             <div class="animeThumbnail">
                 <img th:src="${anime.coverImage}" alt="coverImage">
             </div>

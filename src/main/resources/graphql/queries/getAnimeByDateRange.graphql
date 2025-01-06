@@ -33,7 +33,7 @@ query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLe
                 large
             }
             bannerImage
-            description
+            description(asHtml: false)
             characters(sort: ROLE) {
                 nodes {
                     id
