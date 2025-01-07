@@ -7,7 +7,6 @@
     <link th:rel="stylesheet" th:href="@{/css/browseGrid.css}">
     <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
 
-
     <script src="https://unpkg.com/htmx.org@2.0.4"
             integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
             crossorigin="anonymous"></script>
@@ -45,7 +44,7 @@
     </ul>
 
     <main id="mainGridContainer">
-        <a th:href="${'/anime/' + anime.anilistId}" class="animeDiv" th:each="anime, iter: ${mediaList}">
+        <a th:href="${'/anime/' + anime.anilistId ?: anime.id}" class="animeDiv" th:each="anime, iter: ${mediaList}">
             <div class="animeThumbnail">
                 <img th:src="${anime.coverImage}" alt="coverImage">
             </div>

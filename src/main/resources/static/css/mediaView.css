@@ -87,3 +87,35 @@ body {
         margin: 0;
     }
 }
+
+.mediaCharactersGridWrapper {
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: auto auto;
+    grid-template-rows: 200px;
+}
+
+.characterDiv {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 85px auto;
+    height: 115px;
+    max-height: 115px;
+    box-shadow: 2px 2px 4px #061120;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(21,31,45,0.96);
+}
+
+.characterThumbnail {
+    height: 100%;
+
+    img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.characterBriefDetails {
+    position: relative;
+}

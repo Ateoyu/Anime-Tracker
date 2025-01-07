@@ -41,5 +41,7 @@ public class MediaController {
     public ResponseEntity<List<MediaDto>> getMediaAverageScoreGreaterTest(@PathVariable Integer score) {
         return new ResponseEntity<>(mediaClient.animeByAverageScoreGreaterThan(score), HttpStatus.OK);
     }
+
+
 }
 

@@ -46,13 +46,11 @@ body {
     }
 }
 
-
 #mainGridContainer {
     display: grid;
     position: relative;
     grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     grid-template-rows: auto;
-
 
     padding: 30px;
     justify-content: center;
@@ -62,7 +60,7 @@ body {
 .animeDiv {
     position: relative;
     display: grid;
-    box-shadow: 2px 2px 4px #061120;;
+    box-shadow: 2px 2px 4px #061120;
     border-radius: 8px;
     overflow: hidden;
 }
