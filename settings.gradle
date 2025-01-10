@@ -1,1 +1,4 @@
 rootProject.name = 'demo1'
+
+include 'BackEnd'
+include 'FrontEnd'
