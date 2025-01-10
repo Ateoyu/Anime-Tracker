@@ -1,13 +1,13 @@
 package pjatk.edu.pl.backend.service;
 
-import pjatk.edu.pl.backend.client.MediaClient;
-import pjatk.edu.pl.backend.service.mapper.MediaMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pjatk.edu.pl.backend.client.MediaClient;
+import pjatk.edu.pl.backend.service.mapper.MediaMapper;
 import pjatk.edu.pl.data.dto.MediaDto;
 import pjatk.edu.pl.data.exception.MediaClientException;
 import pjatk.edu.pl.data.exception.MediaNotFoundException;
@@ -17,6 +17,7 @@ import pjatk.edu.pl.data.repository.MediaRepository;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -55,25 +56,11 @@ public class MediaService {
 
     @Transactional
     public List<Media> getMediaByDateRange(Integer fromDate, Integer toDate) {
-//        List<Media> databaseMediaList = mediaRepository.findByDateRange(fromDate, toDate);
-//        List<MediaDto> apiMediaList = mediaClient.getAnimeByDateRange(fromDate, toDate);
-//        for (MediaDto mediaDto : apiMediaList) {
-//            Media media = mediaMapper.toEntity(mediaDto);
-//            if (!databaseMediaList.contains(media)) {
-//                log.info("Media with AniList ID: {} - not found in local database, proceeding to save media.",
-//                        media.getAnilistId());
-//                databaseMediaList.add(mediaRepository.save(media));
-//            }
-//            log.info("Media with AniList ID: {} - already in database.", media.getAnilistId());
-//        }
-//
-//        return databaseMediaList;
-
         if (fromDate == null || toDate == null) throw new IllegalArgumentException("From and To dates cannot be null");
         if (fromDate > toDate) throw new InputMismatchException("From Date cannot be greater than To Date");
 
-        List<Media> databaseMediaList = mediaRepository.findByDateRange(fromDate, toDate);
         List<MediaDto> apiMediaList;
+
         try {
             apiMediaList = mediaClient.getAnimeByDateRange(fromDate, toDate);
         } catch (MediaClientException e) {
@@ -81,19 +68,21 @@ public class MediaService {
         }
 
         for (MediaDto mediaDto : apiMediaList) {
-            Media media = mediaMapper.toEntity(mediaDto);
-            if (!databaseMediaList.contains(media)) {
-                log.info("Media with AniList ID: {} - not found in local database, proceeding to save media.", media.getAnilistId());
-                databaseMediaList.add(mediaRepository.save(media));
+            Optional<Media> mediaInDb = mediaRepository.findByAnilistId(mediaDto.id());
+            if (mediaInDb.isEmpty()) {
+                log.info("Media with AniList ID: {} - not found in local database, proceeding to save media.", mediaDto.id());
+                mediaRepository.save(mediaMapper.toEntity(mediaDto));
             } else {
-                log.debug("Media with AniList ID: {} - already exists in local databse", media.getAnilistId());
+                log.debug("Media with AniList ID: {} - already exists in local database", mediaDto.id());
             }
         }
 
-        if (databaseMediaList.isEmpty()) {
+        List<Media> mediaList = mediaRepository.findByDateRange(fromDate, toDate);
+
+        if (mediaList.isEmpty()) {
             throw new MediaNotFoundException("No media found for date range " + fromDate + " to " + toDate);
         }
-        return databaseMediaList;
+        return mediaList;
     }
 
     public Page<Media> getMediaByPage(Integer page, Integer size) {

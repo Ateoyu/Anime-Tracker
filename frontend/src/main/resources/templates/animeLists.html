@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Lists</title>
+    <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+
+    <script src="https://unpkg.com/htmx.org@2.0.4"
+            integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header th:replace="~{home :: mainHeader}"></header>
+
+<main>
+    <form th:action="@{/animeLists}" th:object="${mediaList}" method="POST">
+        <h1>Create Anime List</h1>
+        <label for="title">List Title:</label>
+        <input type="text" id="title" name="title" th:field="*{title}">
+        <label for="description">List Description:</label>
+        <input type="text" id="description" name="description" th:field="*{description}">
+        <input type="submit" value="Submit">
+    </form>
+
+    <section>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="mediaList : ${allMediaLists}">
+                <td><a th:href="${'/animeLists/' + mediaList.id}" th:text="${mediaList.title}"></a></td>
+                <td><a th:href="${'/animeLists/' + mediaList.id}" th:text="${mediaList.description}"></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer th:replace="~{footer :: footer}"></footer>
+
+</body>
+</html>

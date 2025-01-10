@@ -1,16 +1,16 @@
 package pjatk.edu.pl.frontend.controller;
 
-import pjatk.edu.pl.data.model.Media;
-import pjatk.edu.pl.backend.service.GenreService;
-import pjatk.edu.pl.backend.service.MediaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import pjatk.edu.pl.backend.service.GenreService;
+import pjatk.edu.pl.backend.service.MediaService;
+import pjatk.edu.pl.data.model.CustomMediaList;
+import pjatk.edu.pl.data.model.Media;
+import pjatk.edu.pl.frontend.service.ViewService;
 
 @Slf4j
 @Controller
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ViewController {
     private final MediaService mediaService;
     private final GenreService genreService;
+    private final ViewService viewService;
 
     @GetMapping("/")
     public String home() {
@@ -40,6 +41,25 @@ public class ViewController {
     public String anime(@PathVariable int id, Model model) {
         model.addAttribute("media", mediaService.getMediaById(id));
         return "mediaView";
+    }
+
+    @GetMapping("/animeLists")
+    public String animeLists(Model model) {
+        model.addAttribute("mediaList", new CustomMediaList());
+        model.addAttribute("allMediaLists", viewService.getAllMediaLists());
+        return "animeLists";
+    }
+
+    @PostMapping("/animeLists")
+    public String animeListsSubmit(@ModelAttribute("mediaList") CustomMediaList mediaList) {
+        viewService.createMediaList(mediaList);
+        return "redirect:/animeLists";
+    }
+
+    @GetMapping("/animeLists/{id}")
+    public String viewSpecificAnimeList(@PathVariable int id, Model model) {
+        model.addAttribute("animeList", viewService.getMediaList(id));
+        return "animeListView";
     }
 
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${animeList.title}"></title>
+    <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+</head>
+<body>
+
+<header th:replace="~{home :: mainHeader}"></header>
+
+<main>
+    <h1 th:text="${animeList.title}"></h1>
+
+
+</main>
+
+<footer th:replace="~{footer :: footer}"></footer>
+
+</body>
+</html>
