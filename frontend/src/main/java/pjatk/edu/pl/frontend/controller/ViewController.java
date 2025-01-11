@@ -39,6 +39,15 @@ public class ViewController {
         return "browse";
     }
 
+    @GetMapping("/browse/next")
+    public String browseNext(@RequestParam(defaultValue = "0") int page, Model model) {
+        Page<Media> mediaList = mediaService.getMediaByPage(page, 50);
+        model.addAttribute("mediaList", mediaList.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("hasNext", mediaList.hasNext());
+        return "fragments/animeGrid :: animeGrid";
+    }
+
     //    Page displaying specific anime
     @GetMapping("/anime/{id}")
     public String anime(@PathVariable int id, Model model) {
