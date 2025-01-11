@@ -25,6 +25,8 @@ public class ViewController {
         return "home";
     }
 
+
+    //    Browse page displaying all anime in a paginated form
     @GetMapping("/browse")
     public String browse(@RequestParam(defaultValue = "0") int page, Model model) {
         Page<Media> mediaList = mediaService.getMediaByPage(page, 50);
@@ -37,6 +39,7 @@ public class ViewController {
         return "browse";
     }
 
+    //    Page displaying specific anime
     @GetMapping("/anime/{id}")
     public String anime(@PathVariable int id, Model model) {
         model.addAttribute("media", mediaService.getMediaById(id));
@@ -50,6 +53,7 @@ public class ViewController {
         return "redirect:/anime/" + id;
     }
 
+    //    page displaying all the anime lists that have been created and optionally creating a new list
     @GetMapping("/animeLists")
     public String animeLists(Model model) {
         model.addAttribute("mediaList", new CustomMediaList());
@@ -63,12 +67,18 @@ public class ViewController {
         return "redirect:/animeLists";
     }
 
+    //    Page displaying details of the specific anime list,
+    //    showing the anime added to it, and allowing for deleting stuff from it.
     @GetMapping("/animeLists/{id}")
     public String viewSpecificAnimeList(@PathVariable int id, Model model) {
         model.addAttribute("animeList", viewService.getMediaList(id));
         return "animeListView";
     }
 
-
+    @PostMapping("/animeLists/{id}")
+    public String deleteSpecificAnimeList(@PathVariable int id, @RequestParam int mediaId) {
+        viewService.deleteMediaFromMediaList(id, mediaId);
+        return "redirect:/animeLists/" + id;
+    }
 
 }

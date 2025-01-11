@@ -16,6 +16,21 @@ body {
     align-items: center;
     background: #152232;
     color: rgb(160, 177, 197);
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+
+        color: white !important;
+        transition: color 0.3s;
+
+    }
+
+    a:visited {
+        color: rgb(160, 177, 197);
+    }
 }
 
 .websiteLogo {

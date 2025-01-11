@@ -5,6 +5,7 @@
     <title th:text="${animeList.title}"></title>
     <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
     <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/mediaListView.css}">
 </head>
 <body>
 
@@ -13,44 +14,25 @@
 <main>
     <h1 th:text="${animeList.title}"></h1>
     <p th:text="${animeList.description}"></p>
-    
-    <div class="media-grid">
-        <div th:each="media : ${animeList.mediaList}" class="media-item">
-            <a th:href="@{'/anime/' + ${media.anilistId}}">
-                <img th:src="${media.coverImage}" th:alt="${media.title}">
-                <h3 th:text="${media.title.english} ?: ${media.title.romaji}"></h3>
+
+    <main id="mainGridContainer">
+        <div th:each="anime : ${animeList.mediaList}">
+            <a th:href="${'/anime/' + anime.anilistId ?: anime.id}" class="animeDiv">
+                <div class="animeThumbnail">
+                    <img th:src="${anime.coverImage}" alt="coverImage">
+                </div>
+                <div class="animeText">
+                    <h3 th:if="${anime.title.english != null}" th:text="${anime.title.english}">Title</h3>
+                    <h3 th:if="${anime.title.english == null}" th:text="${anime.title.romaji}">Title</h3>
+                </div>
             </a>
+            <form method="post" th:action="${'/animeLists/' + animeList.id}">
+                <input type="hidden" name="mediaId" th:value="${anime.anilistId}">
+                <button type="submit">Delete</button>
+            </form>
         </div>
-    </div>
+    </main>
 
-    <style>
-        .media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .media-item {
-            text-align: center;
-        }
-
-        .media-item img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .media-item h3 {
-            margin-top: 10px;
-            font-size: 1rem;
-        }
-
-        .media-item a {
-            text-decoration: none;
-            color: inherit;
-        }
-    </style>
 </main>
 
 <footer th:replace="~{footer :: footer}"></footer>

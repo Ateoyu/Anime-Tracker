@@ -55,4 +55,15 @@ public class ViewService {
             log.error("Failed to add media to list: {}", e.getMessage());
         }
     }
+
+    public void deleteMediaFromMediaList(int mediaListId, int mediaId) {
+        try {
+            restClient.post()
+                    .uri("/customMediaList/deleteFrom/" + mediaListId + "?mediaId=" + mediaId)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+            log.error("Failed to delete media from list: {}", e.getMessage());
+        }
+    }
 }

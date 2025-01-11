@@ -55,6 +55,21 @@ body {
     padding: 30px;
     justify-content: center;
     gap: 25px;
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        h3 {
+            color: white !important;
+            transition: color 0.3s;
+        }
+    }
+
+    a:visited {
+        color: rgb(160, 177, 197);
+    }
 }
 
 .animeDiv {

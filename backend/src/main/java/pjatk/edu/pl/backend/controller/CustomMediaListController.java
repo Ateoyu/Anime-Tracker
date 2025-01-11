@@ -28,4 +28,16 @@ public class CustomMediaListController {
     public ResponseEntity<List<CustomMediaList>> getAllMediaList() {
         return ResponseEntity.ok(mediaListService.getAllMediaLists());
     }
+
+    @PostMapping("/customMediaList/addTo/{id}")
+    public ResponseEntity<Void> addToMediaList(@PathVariable int id, @RequestParam int mediaId) {
+        mediaListService.addMediaToList(id, mediaId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/customMediaList/deleteFrom/{id}")
+    public ResponseEntity<Void> deleteFromMediaList(@PathVariable int id, @RequestParam Integer mediaId) {
+        mediaListService.deleteMediaFromList(id, mediaId);
+        return ResponseEntity.ok().build();
+    }
 }
