@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${animeList.title}"></title>
+    <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/mediaListView.css}">
+</head>
+<body>
+
+<header th:replace="~{home :: mainHeader}"></header>
+
+<main>
+    <h1 th:text="${animeList.title}"></h1>
+    <p th:text="${animeList.description}"></p>
+
+    <main id="mainGridContainer">
+        <div th:each="anime : ${animeList.mediaList}">
+            <a th:href="${'/anime/' + anime.anilistId ?: anime.id}" class="animeDiv">
+                <div class="animeThumbnail">
+                    <img th:src="${anime.coverImage}" alt="coverImage">
+                </div>
+                <div class="animeText">
+                    <h3 th:if="${anime.title.english != null}" th:text="${anime.title.english}">Title</h3>
+                    <h3 th:if="${anime.title.english == null}" th:text="${anime.title.romaji}">Title</h3>
+                </div>
+            </a>
+            <form method="post" th:action="${'/animeLists/' + animeList.id}">
+                <input type="hidden" name="mediaId" th:value="${anime.anilistId}">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </main>
+
+</main>
+
+<footer th:replace="~{footer :: footer}"></footer>
+
+</body>
+</html>

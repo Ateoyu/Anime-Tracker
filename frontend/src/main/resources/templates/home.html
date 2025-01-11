@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+</head>
+<body>
+
+<header th:fragment="mainHeader" id="headerGridContainer">
+    <img class="websiteLogo" th:src="@{/images/aniListLogo.png}" alt="Website Logo">
+    <h1><a href="">Home</a> </h1>
+    <h1><a href="/animeLists">Anime Lists</a></h1>
+    <h1><a href="/browse">Browse</a></h1>
+</header>
+
+<footer th:replace="~{footer :: footer}"></footer>
+
+</body>
+</html>

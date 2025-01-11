@@ -1,0 +1,35 @@
+#footerContainer {
+    background-color: #152232;
+    color: rgb(160, 177, 197);
+    text-align: center;
+    padding: 20px 10px;
+    box-shadow: 0 -5px 10px #061120;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: auto;
+
+    p {
+        margin: 0;
+        font-size: clamp(14px, 1.5vw, 18px);
+        color: rgb(183, 202, 225);
+        letter-spacing: 2px;
+    }
+}
+
+.footerNav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 15px;
+
+    a {
+        text-decoration: none;
+        color: rgb(160, 177, 197);
+        font-size: clamp(12px, 1.5vw, 16px);
+        transition: color 0.3s;
+    }
+
+    a:hover {
+        color: #ffffff;
+    }
+}

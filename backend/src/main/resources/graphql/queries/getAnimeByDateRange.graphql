@@ -1,0 +1,58 @@
+query AnimeByDateRange($page: Int, $startDateGreater: FuzzyDateInt, $startDateLesser: FuzzyDateInt) {
+    Page(page: $page, perPage: 50) {
+        pageInfo {
+            currentPage
+            hasNextPage
+        }
+        media(type: ANIME,
+            startDate_greater: $startDateGreater,
+            startDate_lesser: $startDateLesser,
+            status_in: [FINISHED, RELEASING]
+            sort: START_DATE,
+            isAdult: false) {
+            id
+            title {
+                english
+                romaji
+                native
+            }
+            episodes
+            startDate {
+                year
+                month
+                day
+            }
+            endDate {
+                year
+                month
+                day
+            }
+            genres
+            averageScore
+            coverImage {
+                large
+            }
+            bannerImage
+            description(asHtml: false)
+            characters(sort: ROLE) {
+                nodes {
+                    id
+                    name {
+                        full
+                        native
+                    }
+                    gender
+                    age
+                    dateOfBirth {
+                        year
+                        month
+                        day
+                    }
+                    image {
+                        large
+                    }
+                }
+            }
+        }
+    }
+}

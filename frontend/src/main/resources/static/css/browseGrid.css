@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #0B1622;
+}
+
+.generalContainer {
+
+}
+
+.animeFilter {
+    font-family: 'Roboto', sans-serif;
+    color: #CEDAEAFF;
+
+    display: flex;
+    gap: 1rem;
+    justify-content: space-around;
+    padding: 0;
+    margin-top: 25px;
+
+    li {
+        list-style: none;
+        width: 25%;
+    }
+
+    label {
+        display: block;
+    }
+
+    select {
+        width: 85%;
+        padding: 10px 15px;
+        margin-top: 5px;
+        font-size: 14px;
+        background-color: #152232;
+        color: #CEDAEAFF;
+        border: 1px solid #1B2D41;
+        border-radius: 5px;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%234D5D68' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 25px;
+    }
+}
+
+#mainGridContainer {
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    grid-template-rows: auto;
+
+    padding: 30px;
+    justify-content: center;
+    gap: 25px;
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        h3 {
+            color: white !important;
+            transition: color 0.3s;
+        }
+    }
+
+    a:visited {
+        color: rgb(160, 177, 197);
+    }
+}
+
+.animeDiv {
+    position: relative;
+    display: grid;
+    box-shadow: 2px 2px 4px #061120;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.animeThumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.animeText {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #CEDAEAFF;
+
+    background: linear-gradient(to top, black, transparent 50%);
+
+
+    padding: 0 10px 10px 10px;
+    h3 {
+        margin: 0;
+    }
+}
+
+.animeThumbnail,
+.animeText {
+    grid-area: 1/-1;
+}

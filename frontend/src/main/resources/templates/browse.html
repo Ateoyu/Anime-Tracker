@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse Anime</title>
+    <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/browseGrid.css}">
+    <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+
+    <script src="https://unpkg.com/htmx.org@2.0.4"
+            integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header th:replace="~{home :: mainHeader}"></header>
+
+<div class="generalContainer">
+    <ul class="animeFilter">
+        <!--todo:
+        For each option from any of the filters,
+        use a HTMX hx:post to pass the filters and replace the anime being displayed-->
+        <li>
+            <label for="genreFilter">Genres</label>
+            <select name="genreFilter" id="genreFilter">
+                <option value="All">All</option>
+                <option th:each="genre : ${genres}" th:text="${genre.name}" th:value="${genre.name}"></option>
+            </select>
+        </li>
+        <li>
+            <label for="yearFilter">Release Year</label>
+            <select name="yearFilter" id="yearFilter">
+                <option value="All">All</option>
+                <option th:each="year : ${years}" th:text="${year}" th:value="${year}"></option>
+            </select>
+        </li>
+        <li>
+            <label for="episodeFilter">Episode</label>
+            <select name="episodeFilter" id="episodeFilter">
+                <option value="All">All</option>
+                <option th:each="episodeNum : ${episodes}" th:text="${episodeNum}" th:value="${episodeNum}"></option>
+            </select>
+        </li>
+    </ul>
+
+    <main id="mainGridContainer">
+        <a th:href="${'/anime/' + anime.anilistId ?: anime.id}" class="animeDiv" th:each="anime, iter: ${mediaList}">
+            <div class="animeThumbnail">
+                <img th:src="${anime.coverImage}" alt="coverImage">
+            </div>
+            <div class="animeText">
+                <h3 th:if="${anime.title.english != null}" th:text="${anime.title.english}">Title</h3>
+                <h3 th:if="${anime.title.english == null}" th:text="${anime.title.romaji}">Title</h3>
+            </div>
+        </a>
+    </main>
+</div>
+
+<footer th:replace="~{footer :: footer}"></footer>
+
+
+</body>
+</html>

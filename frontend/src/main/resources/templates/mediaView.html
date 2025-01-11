@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${media.title.english} ?: ${media.title.romaji}"></title>
+    <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/mediaView.css}">
+
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header th:replace="~{home :: mainHeader}"></header>
+
+<div id="bannerAndInfoWrapper">
+    <div id="banner" th:style="'background-image: url('+ ${media.bannerImage} +')'"></div>
+
+    <div id="info">
+        <div class="infoContainer">
+            <div class="cover-wrap-overlap-banner">
+                <div class="cover-wrap-inner">
+                    <img th:src="${media.coverImage}" class="cover-image" alt="coverImage">
+
+                    <!--todo: change the drop down to display all animeLists to select which to add to.-->
+                    <label for="mediaListSelect">Media Lists to add to:</label>
+                    <form method="post" th:action="@{/anime/{id}(id=${media.anilistId})}" class="actions">
+                        <select id="mediaListSelect" name="mediaListId">
+                            <option th:each="mediaList : ${allMediaLists}"
+                                    th:text="${mediaList.id} + ': ' + ${mediaList.title}"
+                                    th:value="${mediaList.id}"></option>
+                        </select>
+                        <button type="submit">Add</button>
+                    </form>
+
+
+                </div>
+            </div>
+
+            <div class="content">
+                <h1 th:text="${media.title.english} ?: ${media.title.romaji}"></h1>
+                <h2 th:if="${media.title.english}" th:text="${media.title.romaji}"></h2>
+                <h3 th:text="${media.title.local}"></h3>
+                <p th:text="${media.description}"></p>"
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mediaDataContainer">
+    <aside>
+        <dl class="mediaData">
+            <div th:if="${media.averageScore}" class="data avgScore">
+                <dt>Average Score</dt>
+                <dd th:text="${media.averageScore}"></dd>
+            </div>
+            <div th:if="${media.episodes}" class="data episodes">
+                <dt>Episodes</dt>
+                <dd th:text="${media.episodes}"></dd>
+            </div>
+            <div th:if="${media.startDate}" class="data starDate">
+                <dt>Start Date</dt>
+                <dd th:text="${media.startDate.day} + '/' + ${media.startDate.month} + '/' + ${media.startDate.year}"></dd>
+            </div>
+            <div th:if="${media.endDate}" class="data endDate">
+                <dt>End Date</dt>
+                <dd th:text="${media.endDate.day} + '/' + ${media.endDate.month} + '/' + ${media.endDate.year}"></dd>
+            </div>
+        </dl>
+    </aside>
+    <div class="mediaOverview">
+        <div class="mediaCharacters">
+            <h2>Characters</h2>
+            <div class="mediaCharactersGridWrapper">
+                <a class="characterDiv" th:href="${'/character/' + character.anilistId ?: character.id}" th:each="character: ${media.characters}">
+                    <div class="characterThumbnail">
+                        <img th:src="${character.imageUrl}" alt="characterImage">
+                    </div>
+                    <dl class="characterBriefDetails">
+                        <dt th:text="${character.name.full} ?: ${character.name.local}"></dt>
+                        <dt th:if="${character.name.full}" th:text="${character.name.local}"></dt>
+                        <dd th:if="${character.gender}" th:text="'Gender: ' + ${character.gender}"></dd>
+                        <dd th:if="${character.age}" th:text="'Age: ' + ${character.age}"></dd>
+                        <dd th:if="${character.dateOfBirth}" th:text="${character.dateOfBirth.day} + '/' + ${character.dateOfBirth.month} + '/' + ${character.dateOfBirth.year}"></dd>
+                    </dl>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="~{footer :: footer}"></footer>
+
+</body>
+</html>
