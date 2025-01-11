@@ -10,4 +10,11 @@
             <h3 th:if="${anime.title.english == null}" th:text="${anime.title.romaji}">Title</h3>
         </div>
     </a>
+
+    <div th:attr="hx-get=@{/browse/next(page=${currentPage + 1})}"
+         hx-trigger="intersect once"
+         hx-swap="outerHTML"
+         th:if="${hasNext}">
+        <div class="loading-indicator">Loading more...</div>
+    </div>
 </th:block>

@@ -59,8 +59,7 @@
         <!-- Trigger element for infinite scroll -->
         <div th:attr="hx-get=@{/browse/next(page=${currentPage + 1})}"
              hx-trigger="intersect once"
-             hx-swap="beforebegin"
-             hx-target="this"
+             hx-swap="outerHTML"
              th:if="${hasNext}">
             <div class="loading-indicator">Loading more...</div>
         </div>
