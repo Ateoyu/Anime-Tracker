@@ -22,13 +22,16 @@
                 <div class="cover-wrap-inner">
                     <img th:src="${media.coverImage}" class="cover-image" alt="coverImage">
 
-<!--                    todo: change the drop down to display all animeLists to select which to add to.-->
-                    <div class="actions">
-                        <select>
-                            <option value="" selected="selected"></option>
+                    <!--todo: change the drop down to display all animeLists to select which to add to.-->
+                    <label for="mediaListSelect">Media Lists to add to:</label>
+                    <form method="post" th:action="@{/anime/{id}(id=${media.anilistId})}" class="actions">
+                        <select id="mediaListSelect" name="mediaListId">
+                            <option th:each="mediaList : ${allMediaLists}"
+                                    th:text="${mediaList.id} + ': ' + ${mediaList.title}"
+                                    th:value="${mediaList.id}"></option>
                         </select>
-                        <button>Add</button>
-                    </div>
+                        <button type="submit">Add</button>
+                    </form>
 
 
                 </div>

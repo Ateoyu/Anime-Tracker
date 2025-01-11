@@ -34,8 +34,7 @@ public class ViewService {
         return restClient.get()
                 .uri("/customMediaList/getAll")
                 .retrieve()
-                .toEntity(new ParameterizedTypeReference<List<CustomMediaList>>() {})
-                .getBody();
+                .body(new ParameterizedTypeReference<>() {});
     }
 
     public CustomMediaList getMediaList(int id) {
@@ -44,5 +43,16 @@ public class ViewService {
                 .retrieve()
                 .toEntity(CustomMediaList.class)
                 .getBody();
+    }
+
+    public void addMediaToList(int listId, int mediaId) {
+        try {
+            restClient.post()
+                    .uri("/customMediaList/addTo/" + listId + "?mediaId=" + mediaId)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+            log.error("Failed to add media to list: {}", e.getMessage());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package pjatk.edu.pl.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,11 +12,16 @@ import java.util.Set;
 public class CustomMediaList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String title;
-    String description;
+    private Integer id;
+    private String title;
+    private String description;
 
     @ManyToMany
-            @JoinTable(name = "media_list_relations")
-    Set<Media> mediaList;
+    @JoinTable(
+        name = "media_list_relations",
+        joinColumns = @JoinColumn(name = "media_list_id"),
+        inverseJoinColumns = @JoinColumn(name = "media_id")
+    )
+    @JsonIgnoreProperties({"characters", "genres"})
+    private Set<Media> mediaList;
 }

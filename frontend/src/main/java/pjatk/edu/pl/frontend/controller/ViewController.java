@@ -40,7 +40,14 @@ public class ViewController {
     @GetMapping("/anime/{id}")
     public String anime(@PathVariable int id, Model model) {
         model.addAttribute("media", mediaService.getMediaById(id));
+        model.addAttribute("allMediaLists", viewService.getAllMediaLists());
         return "mediaView";
+    }
+
+    @PostMapping("/anime/{id}")
+    public String addAnimeToAnimeList(@PathVariable int id, @RequestParam int mediaListId) {
+        viewService.addMediaToList(mediaListId, id);
+        return "redirect:/anime/" + id;
     }
 
     @GetMapping("/animeLists")
@@ -61,5 +68,7 @@ public class ViewController {
         model.addAttribute("animeList", viewService.getMediaList(id));
         return "animeListView";
     }
+
+
 
 }
