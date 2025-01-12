@@ -40,4 +40,10 @@ public class CustomMediaListController {
         mediaListService.deleteMediaFromList(id, mediaId);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/customMediaList/delete/{listId}")
+    public ResponseEntity<Void> deleteList(@PathVariable int listId) {
+        mediaListService.deleteMediaList(listId);
+        return ResponseEntity.ok().build();
+    }
 }
