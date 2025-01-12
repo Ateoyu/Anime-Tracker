@@ -63,4 +63,8 @@ public class CustomMediaListService {
         mediaList.getMediaList().remove(mediaService.getMediaById(mediaId));
         mediaListRepository.save(mediaList);
     }
+
+    public void deleteMediaList(int id) {
+        mediaListRepository.deleteById(id);
+    }
 }

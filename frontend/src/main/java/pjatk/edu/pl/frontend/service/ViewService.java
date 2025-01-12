@@ -66,4 +66,15 @@ public class ViewService {
             log.error("Failed to delete media from list: {}", e.getMessage());
         }
     }
+
+    public void deleteMediaList(int id) {
+        try {
+            restClient.delete()
+                    .uri("/customMediaList/delete/" + id)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+            log.error("Failed to delete media list: {}", e.getMessage());
+        }
+    }
 }
