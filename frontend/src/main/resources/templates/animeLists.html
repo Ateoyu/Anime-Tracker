@@ -37,6 +37,12 @@
             <tr th:each="mediaList : ${allMediaLists}">
                 <td><a th:href="${'/animeLists/' + mediaList.id}" th:text="${mediaList.title}"></a></td>
                 <td><a th:href="${'/animeLists/' + mediaList.id}" th:text="${mediaList.description}"></a></td>
+                <td>
+                    <form th:action="@{/animeLists/delete}" method="post">
+                        <input type="hidden" name="id" th:value="${mediaList.id}">
+                        <button  type="submit">Delete List</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

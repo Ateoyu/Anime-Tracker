@@ -69,12 +69,10 @@ public class MediaClient {
                 }
                 """;
 
-        MediaDto mediaDto = graphQlClient.document(query)
+        return graphQlClient.document(query)
                 .variable("mediaId", animeId)
                 .retrieve("Media")
                 .toEntity(MediaDto.class).block();
-
-        return mediaDto;
     }
 
     public List<MediaDto> getAnimeByDateRange(Integer from, Integer to) {
