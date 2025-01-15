@@ -30,6 +30,6 @@ public class MediaExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {MediaClientException.class})
     public ResponseEntity<Object> handleClientError(RuntimeException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

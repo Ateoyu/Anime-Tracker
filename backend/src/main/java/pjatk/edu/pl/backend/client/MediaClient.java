@@ -6,6 +6,7 @@ import org.springframework.graphql.client.HttpGraphQlClient;
 import org.springframework.stereotype.Component;
 import pjatk.edu.pl.data.dto.MediaDto;
 import pjatk.edu.pl.data.dto.PageDto;
+import pjatk.edu.pl.data.exception.MediaClientException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,10 +70,14 @@ public class MediaClient {
                 }
                 """;
 
-        return graphQlClient.document(query)
-                .variable("mediaId", animeId)
-                .retrieve("Media")
-                .toEntity(MediaDto.class).block();
+        try {
+            return graphQlClient.document(query)
+                    .variable("mediaId", animeId)
+                    .retrieve("Media")
+                    .toEntity(MediaDto.class).block();
+        } catch (Exception e) {
+            throw new MediaClientException(e.getMessage());
+        }
     }
 
     public List<MediaDto> getAnimeByDateRange(Integer from, Integer to) {
