@@ -2,6 +2,7 @@ package pjatk.edu.pl.backend.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class MediaService {
     private final MediaMapper mediaMapper;
 
     @Transactional
+    @Cacheable(value = "media")
     public Media getMediaById(Integer anilistId) {
         if (anilistId == null) {
             throw new MediaObjectIncomplete("Media ID cannot be null");
@@ -36,8 +38,7 @@ public class MediaService {
 
         return mediaRepository.findByAnilistId(anilistId)
                 .orElseGet(() -> {
-                    log.info("Media with AniList ID: {} - not found in local database, proceeding to save media",
-                            anilistId);
+                    log.info("Media with AniList ID: {} - not found in local database, proceeding to save media",anilistId);
                     MediaDto mediaDto = mediaClient.viewMedia(anilistId);
                     if (mediaDto == null) {
                         throw new MediaClientException(
@@ -55,6 +56,7 @@ public class MediaService {
     }
 
     @Transactional
+    @Cacheable(value = "mediaByDateRange")
     public List<Media> getMediaByDateRange(Integer fromDate, Integer toDate) {
         if (fromDate == null || toDate == null) throw new IllegalArgumentException("From and To dates cannot be null");
         if (fromDate > toDate) throw new InputMismatchException("From Date cannot be greater than To Date");
@@ -85,6 +87,7 @@ public class MediaService {
         return mediaList;
     }
 
+    @Cacheable(value = "mediaPaginated")
     public Page<Media> getMediaByPage(Integer page, Integer size) {
         if (page == null || size == null) throw new IllegalArgumentException("Page size cannot be null");
         if (page < 0) throw new IllegalArgumentException("Page index cannot be negative");

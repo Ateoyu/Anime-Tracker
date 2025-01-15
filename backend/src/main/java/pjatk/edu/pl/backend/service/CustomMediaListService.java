@@ -28,6 +28,10 @@ public class CustomMediaListService {
     }
 
     public CustomMediaList getMediaList(int id) {
+        return getCustomMediaList(id);
+    }
+
+    private CustomMediaList getCustomMediaList(int id) {
         Optional<CustomMediaList> mediaListInDb = mediaListRepository.findById(id);
         if (mediaListInDb.isPresent()) {
             return mediaListInDb.get();
@@ -38,7 +42,7 @@ public class CustomMediaListService {
     }
 
     public void addMediaToList(int listId, int mediaId) {
-        CustomMediaList mediaList = getMediaList(listId);
+        CustomMediaList mediaList = getCustomMediaList(listId);
         if (mediaList == null) {
             log.error("addMediaToList: No media list found with id {}", listId);
             return;
@@ -59,9 +63,11 @@ public class CustomMediaListService {
     }
 
     public void deleteMediaFromList(int id, int mediaId) {
-        CustomMediaList mediaList = getMediaList(id);
-        mediaList.getMediaList().remove(mediaService.getMediaById(mediaId));
-        mediaListRepository.save(mediaList);
+        CustomMediaList mediaList = getCustomMediaList(id);
+        if (mediaList != null) {
+            mediaList.getMediaList().remove(mediaService.getMediaById(mediaId));
+            mediaListRepository.save(mediaList);
+        }
     }
 
     public void deleteMediaList(int id) {

@@ -5,6 +5,7 @@
     <title>Anime Lists</title>
     <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
     <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/animeLists.css}">
 
     <script src="https://unpkg.com/htmx.org@2.0.4"
             integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
@@ -15,14 +16,20 @@
 <header th:replace="~{home :: mainHeader}"></header>
 
 <main>
-    <form th:action="@{/animeLists}" th:object="${mediaList}" method="POST">
-        <h1>Create Anime List</h1>
-        <label for="title">List Title:</label>
-        <input type="text" id="title" name="title" th:field="*{title}">
-        <label for="description">List Description:</label>
-        <input type="text" id="description" name="description" th:field="*{description}">
-        <input type="submit" value="Submit">
-    </form>
+
+    <fieldset>
+        <legend>Create Anime List</legend>
+        <form id="createForm" th:action="@{/animeLists}" th:object="${mediaList}" method="POST">
+            <label for="title">List Title: </label>
+            <input type="text" id="title" name="title" th:field="*{title}">
+
+            <label for="description">List Description: </label>
+            <input type="text" id="description" name="description" th:field="*{description}">
+
+            <input type="submit" value="Submit">
+        </form>
+    </fieldset>
+
 
     <section>
         <table>
@@ -40,7 +47,7 @@
                 <td>
                     <form th:action="@{/animeLists/delete}" method="post">
                         <input type="hidden" name="id" th:value="${mediaList.id}">
-                        <button  type="submit">Delete List</button>
+                        <button type="submit">Delete List</button>
                     </form>
                 </td>
             </tr>
