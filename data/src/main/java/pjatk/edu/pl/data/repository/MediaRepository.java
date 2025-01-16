@@ -1,17 +1,19 @@
 package pjatk.edu.pl.data.repository;
 
-import pjatk.edu.pl.data.model.Media;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
 import org.springframework.stereotype.Repository;
+import pjatk.edu.pl.data.model.Media;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MediaRepository extends JpaRepository<Media, Integer> {
+public interface MediaRepository extends JpaRepository<Media, Integer>, 
+                                       QueryByExampleExecutor<Media> {
 
 
     Optional<Media> findByAnilistId(Integer anilistId);

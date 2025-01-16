@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pjatk.edu.pl.backend.service.GenreService;
 import pjatk.edu.pl.backend.service.MediaService;
+import pjatk.edu.pl.data.dto.MediaFilterDto;
 import pjatk.edu.pl.data.model.CustomMediaList;
 import pjatk.edu.pl.data.model.Media;
 import pjatk.edu.pl.frontend.service.ViewService;
@@ -96,6 +97,18 @@ public class ViewController {
     public String deleteSpecificAnimeList(@PathVariable int id, @RequestParam int mediaId) {
         viewService.deleteMediaFromMediaList(id, mediaId);
         return "redirect:/animeLists/" + id;
+    }
+
+    @GetMapping("/browse/filter")
+    public String filterAnime(@ModelAttribute MediaFilterDto filters, Model model) {
+        log.debug("Filtering anime with filters: {}", filters);
+        Page<Media> mediaList = mediaService.getFilteredMedia(filters);
+        
+        model.addAttribute("mediaList", mediaList.getContent());
+        model.addAttribute("currentPage", filters.getPage());
+        model.addAttribute("hasNext", mediaList.hasNext());
+        
+        return "fragments/animeGrid :: animeGrid";
     }
 
 }
