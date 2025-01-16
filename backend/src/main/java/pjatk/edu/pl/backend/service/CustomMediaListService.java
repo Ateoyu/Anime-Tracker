@@ -3,6 +3,7 @@ package pjatk.edu.pl.backend.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pjatk.edu.pl.data.exception.CustomMediaListIncompleteException;
 import pjatk.edu.pl.data.model.CustomMediaList;
 import pjatk.edu.pl.data.model.Media;
 import pjatk.edu.pl.data.repository.CustomMediaListRepository;
@@ -20,7 +21,18 @@ public class CustomMediaListService {
 
 
     public void createMediaList(CustomMediaList mediaList) {
+        if (mediaList.getTitle() == null || mediaList.getTitle().trim().isEmpty()) {
+            log.error("Attempted to create media list with empty title");
+            throw new CustomMediaListIncompleteException("Media list title cannot be empty");
+        }
+        
+        if (mediaList.getDescription() == null || mediaList.getDescription().trim().isEmpty()) {
+            log.error("Attempted to create media list with empty description");
+            throw new CustomMediaListIncompleteException("Media list description cannot be empty");
+        }
+        
         mediaListRepository.save(mediaList);
+        log.debug("Successfully created media list with ID: {}", mediaList.getId());
     }
 
     public List<CustomMediaList> getAllMediaLists() {
@@ -42,6 +54,7 @@ public class CustomMediaListService {
     }
 
     public void addMediaToList(int listId, int mediaId) {
+        log.info("Attempting to add media with ID {} to list with ID: {}", mediaId,  listId);
         CustomMediaList mediaList = getCustomMediaList(listId);
         if (mediaList == null) {
             log.error("addMediaToList: No media list found with id {}", listId);
@@ -60,6 +73,7 @@ public class CustomMediaListService {
         
         mediaList.getMediaList().add(media);
         mediaListRepository.save(mediaList);
+        log.info("Successfully added media with ID {} to list with ID {}", mediaId,  listId);
     }
 
     public void deleteMediaFromList(int id, int mediaId) {
@@ -67,6 +81,7 @@ public class CustomMediaListService {
         if (mediaList != null) {
             mediaList.getMediaList().remove(mediaService.getMediaById(mediaId));
             mediaListRepository.save(mediaList);
+            log.info("Successfully deleted media with ID {} from list with ID {}", mediaId, id);
         }
     }
 
