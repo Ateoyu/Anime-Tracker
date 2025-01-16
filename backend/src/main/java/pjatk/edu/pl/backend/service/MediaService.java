@@ -3,10 +3,7 @@ package pjatk.edu.pl.backend.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pjatk.edu.pl.backend.client.MediaClient;
@@ -17,11 +14,13 @@ import pjatk.edu.pl.data.exception.MediaClientException;
 import pjatk.edu.pl.data.exception.MediaNotFoundException;
 import pjatk.edu.pl.data.exception.MediaObjectIncomplete;
 import pjatk.edu.pl.data.model.Date;
-import pjatk.edu.pl.data.model.Genre;
 import pjatk.edu.pl.data.model.Media;
 import pjatk.edu.pl.data.repository.MediaRepository;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -44,8 +43,7 @@ public class MediaService {
                     log.info("Media with AniList ID: {} - not found in local database, proceeding to save media",anilistId);
                     MediaDto mediaDto = mediaClient.viewMedia(anilistId);
                     if (mediaDto == null) {
-                        throw new MediaClientException(
-                                "Failed to fetch media with ID: " + anilistId + " from external API");
+                        throw new MediaClientException("Failed to fetch media with ID: " + anilistId + " from external API");
                     }
 
                     Media media = mediaMapper.toEntity(mediaDto);
@@ -131,24 +129,28 @@ public class MediaService {
     public Page<Media> getFilteredMedia(MediaFilterDto filters) {
         log.debug("Applying filters: {}", filters);
         
+        // If only genre filter is active, use custom query
+        if (!"All".equals(filters.getGenreFilter()) && 
+            "All".equals(filters.getYearFilter()) && 
+            "All".equals(filters.getEpisodeFilter())) {
+            return mediaRepository.findByGenreName(
+                filters.getGenreFilter(), 
+                PageRequest.of(filters.getPage(), 50)
+            );
+        }
+        
+        // Otherwise, use QueryByExample for other filters
         Media probe = new Media();
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withIgnoreNullValues();
-
-        // Handle Genre filter
-        if (!"All".equals(filters.getGenreFilter())) {
-            Set<Genre> genres = new HashSet<>();
-            genres.add(new Genre(filters.getGenreFilter()));
-            probe.setGenres(genres);
-        }
-
+        
         // Handle Year filter
         if (!"All".equals(filters.getYearFilter())) {
             try {
                 Date startDate = new Date();
                 startDate.setYear(Integer.parseInt(filters.getYearFilter()));
                 probe.setStartDate(startDate);
-            } catch (RuntimeException e) {
+            } catch (NumberFormatException e) {
                 log.error("Invalid year format: {}", filters.getYearFilter());
             }
         }
@@ -157,19 +159,28 @@ public class MediaService {
         if (!"All".equals(filters.getEpisodeFilter())) {
             try {
                 probe.setEpisodes(Integer.parseInt(filters.getEpisodeFilter()));
-            } catch (RuntimeException e) {
+            } catch (NumberFormatException e) {
                 log.error("Invalid episode format: {}", filters.getEpisodeFilter());
             }
         }
         
         Example<Media> example = Example.of(probe, matcher);
+        Page<Media> filteredMedia = mediaRepository.findAll(example, PageRequest.of(filters.getPage(), 50));
         
-        Page<Media> filteredMedia = mediaRepository.findAll(
-            example, 
-            PageRequest.of(filters.getPage(), 50)
-        );
+        // If genre filter is active, filter the results in memory
+        if (!"All".equals(filters.getGenreFilter())) {
+            List<Media> genreFiltered = filteredMedia.getContent().stream()
+                .filter(media -> media.getGenres().stream()
+                    .anyMatch(genre -> genre.getName().equals(filters.getGenreFilter())))
+                .collect(Collectors.toList());
+            
+            return new PageImpl<>(
+                genreFiltered, 
+                PageRequest.of(filters.getPage(), 50),
+                genreFiltered.size()
+            );
+        }
         
-        log.info("Found {} media items matching filters", filteredMedia.getTotalElements());
         return filteredMedia;
     }
 }

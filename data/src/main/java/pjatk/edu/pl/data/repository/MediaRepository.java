@@ -1,5 +1,7 @@
 package pjatk.edu.pl.data.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +30,7 @@ public interface MediaRepository extends JpaRepository<Media, Integer>,
 
     @NativeQuery("SELECT DISTINCT episodes FROM media ORDER BY episodes")
     List<Integer> getAllMediaEpisodes();
+
+    @Query("SELECT DISTINCT m FROM Media m JOIN m.genres g WHERE g.name = :genreName")
+    Page<Media> findByGenreName(@Param("genreName") String genreName, Pageable pageable);
 }

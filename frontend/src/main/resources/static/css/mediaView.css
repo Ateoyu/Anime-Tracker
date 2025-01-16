@@ -19,6 +19,7 @@ body {
     grid-template-columns: 215px auto;
     padding-left: 50px;
     padding-right: 50px;
+    color: rgba(159, 173, 189, 1);
 }
 
 .cover-wrap-overlap-banner {
@@ -67,6 +68,7 @@ body {
     position: relative;
     padding-left: 50px;
     padding-right: 50px;
+    color: rgba(159, 173, 189, 1);
 }
 
 .mediaData {

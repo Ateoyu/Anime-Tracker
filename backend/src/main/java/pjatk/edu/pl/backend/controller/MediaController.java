@@ -22,7 +22,7 @@ public class MediaController {
     private final MediaService mediaService;
 
     @GetMapping("/getMedia/id/{mediaId}")
-    public ResponseEntity<Media> getMediaById(@PathVariable Integer mediaId) {
+    public ResponseEntity<Media>getMediaById(@PathVariable Integer mediaId) {
         return new ResponseEntity<>(mediaService.getMediaById(mediaId), HttpStatus.OK);
     }
 
