@@ -51,7 +51,6 @@ public class MediaService {
                         throw new MediaObjectIncomplete("Failed to map media data for ID: " + anilistId);
                     }
 
-
                     return mediaRepository.save(media);
                 });
     }
@@ -99,15 +98,6 @@ public class MediaService {
             throw new MediaNotFoundException("No media found for page " + page);
         }
         return mediaPage;
-    }
-
-    public List<Media> getAllMedia() {
-        List<Media> mediaList = mediaRepository.findAll();
-        if (mediaList.isEmpty()) {
-            throw new MediaNotFoundException("No media found in local database.");
-        }
-
-        return mediaList;
     }
 
     public List<Integer> getAllAnimeReleaseYear() {
