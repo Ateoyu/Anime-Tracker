@@ -22,23 +22,44 @@
         use a HTMX hx:post to pass the filters and replace the anime being displayed-->
         <li>
             <label for="genreFilter">Genres</label>
-            <select name="genreFilter" id="genreFilter">
+            <select name="genreFilter" 
+                    id="genreFilter"
+                    hx-get="/browse/filter"
+                    hx-trigger="change"
+                    hx-target="#mainGridContainer"
+                    hx-include="[name='yearFilter'],[name='episodeFilter']">
                 <option value="All">All</option>
-                <option th:each="genre : ${genres}" th:text="${genre.name}" th:value="${genre.name}"></option>
+                <option th:each="genre : ${genres}" 
+                        th:text="${genre.name}" 
+                        th:value="${genre.name}"></option>
             </select>
         </li>
         <li>
             <label for="yearFilter">Release Year</label>
-            <select name="yearFilter" id="yearFilter">
+            <select name="yearFilter" 
+                    id="yearFilter"
+                    hx-get="/browse/filter"
+                    hx-trigger="change"
+                    hx-target="#mainGridContainer"
+                    hx-include="[name='genreFilter'],[name='episodeFilter']">
                 <option value="All">All</option>
-                <option th:each="year : ${years}" th:text="${year}" th:value="${year}"></option>
+                <option th:each="year : ${years}" 
+                        th:text="${year}" 
+                        th:value="${year}"></option>
             </select>
         </li>
         <li>
             <label for="episodeFilter">Episode</label>
-            <select name="episodeFilter" id="episodeFilter">
+            <select name="episodeFilter" 
+                    id="episodeFilter"
+                    hx-get="/browse/filter"
+                    hx-trigger="change"
+                    hx-target="#mainGridContainer"
+                    hx-include="[name='genreFilter'],[name='yearFilter']">
                 <option value="All">All</option>
-                <option th:each="episodeNum : ${episodes}" th:text="${episodeNum}" th:value="${episodeNum}"></option>
+                <option th:each="episodeNum : ${episodes}" 
+                        th:text="${episodeNum}" 
+                        th:value="${episodeNum}"></option>
             </select>
         </li>
     </ul>

@@ -18,7 +18,7 @@ public class InvalidInputHandler extends ResponseEntityExceptionHandler {
         log.error("Invalid argument exception: {}", ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
+ 
     @ExceptionHandler(value = {InputMismatchException.class})
     public ResponseEntity<Object> invalidHandleInput(RuntimeException ex) {
         log.error("Input mismatch exception: {}", ex.getMessage());

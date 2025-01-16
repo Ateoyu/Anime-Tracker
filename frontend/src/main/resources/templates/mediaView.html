@@ -41,7 +41,7 @@
                 <h1 th:text="${media.title.english} ?: ${media.title.romaji}"></h1>
                 <h2 th:if="${media.title.english}" th:text="${media.title.romaji}"></h2>
                 <h3 th:text="${media.title.local}"></h3>
-                <p th:text="${media.description}"></p>"
+                <p th:text="${media.description}"></p>
             </div>
         </div>
     </div>
@@ -72,18 +72,24 @@
         <div class="mediaCharacters">
             <h2>Characters</h2>
             <div class="mediaCharactersGridWrapper">
-                <a class="characterDiv" th:href="${'/character/' + character.anilistId ?: character.id}" th:each="character: ${media.characters}">
-                    <div class="characterThumbnail">
-                        <img th:src="${character.imageUrl}" alt="characterImage">
+                <div class="characterDiv" th:href="${'/character/' + character.anilistId ?: character.id}" th:each="character: ${media.characters}">
+                    <div class="characterThumbnailContainer">
+                        <img class="characterThumbnailImg" th:src="${character.imageUrl}" alt="characterImage">
                     </div>
                     <dl class="characterBriefDetails">
-                        <dt th:text="${character.name.full} ?: ${character.name.local}"></dt>
-                        <dt th:if="${character.name.full}" th:text="${character.name.local}"></dt>
-                        <dd th:if="${character.gender}" th:text="'Gender: ' + ${character.gender}"></dd>
-                        <dd th:if="${character.age}" th:text="'Age: ' + ${character.age}"></dd>
+                        <dt th:text="${character.name.full} ?: ${character.name.local}" class="characterPrimaryName"></dt>
+                        <dd th:if="${character.name.full}" th:text="${character.name.local}"></dd>
+
+                        <dt th:if="${character.gender}">Gender:</dt>
+                        <dd th:if="${character.gender}" th:text="${character.gender}"></dd>
+
+                        <dt th:if="${character.age}">Age:</dt>
+                        <dd th:if="${character.age}" th:text="${character.age}"></dd>
+
+                        <dt th:if="${character.dateOfBirth}">Birthday:</dt>
                         <dd th:if="${character.dateOfBirth}" th:text="${character.dateOfBirth.day} + '/' + ${character.dateOfBirth.month} + '/' + ${character.dateOfBirth.year}"></dd>
                     </dl>
-                </a>
+                </div>
             </div>
         </div>
     </div>
