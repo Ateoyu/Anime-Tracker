@@ -84,7 +84,6 @@ public class ViewController {
         return "redirect:/animeLists";
     }
 
-
     //    Page displaying details of the specific anime list,
     //    showing the anime added to it, and allowing for deleting stuff from it.
     @GetMapping("/animeLists/{id}")
