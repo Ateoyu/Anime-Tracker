@@ -1,14 +1,14 @@
 package pjatk.edu.pl.backend.service.mapper;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import pjatk.edu.pl.data.dto.CharacterDto;
 import pjatk.edu.pl.data.model.Character;
 import pjatk.edu.pl.data.repository.CharacterRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class CharacterMapper implements EntityMapper<Character, CharacterDto> {
+class CharacterMapper implements EntityMapper<Character, CharacterDto> {
     private final CharacterRepository characterRepository;
     private final DateMapper dateMapper;
     private final NameMapper nameMapper;

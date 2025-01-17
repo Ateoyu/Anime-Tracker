@@ -1,11 +1,11 @@
 package pjatk.edu.pl.backend.service.mapper;
 
+import org.springframework.stereotype.Component;
 import pjatk.edu.pl.data.dto.DateDto;
 import pjatk.edu.pl.data.model.Date;
-import org.springframework.stereotype.Component;
 
 @Component
-public class DateMapper implements EntityMapper<Date, DateDto>  {
+class DateMapper implements EntityMapper<Date, DateDto>  {
 
     @Override
     public Date toEntity(DateDto dto) {

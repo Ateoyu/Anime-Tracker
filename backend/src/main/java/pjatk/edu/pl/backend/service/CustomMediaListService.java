@@ -83,6 +83,7 @@ public class CustomMediaListService {
             mediaListRepository.save(mediaList);
             log.info("Successfully deleted media with ID {} from list with ID {}", mediaId, id);
         }
+
     }
 
     public void deleteMediaList(int id) {

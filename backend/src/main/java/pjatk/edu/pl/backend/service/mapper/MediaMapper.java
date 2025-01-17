@@ -1,18 +1,18 @@
 package pjatk.edu.pl.backend.service.mapper;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import pjatk.edu.pl.data.dto.MediaDto;
 import pjatk.edu.pl.data.model.Character;
 import pjatk.edu.pl.data.model.Genre;
 import pjatk.edu.pl.data.model.Media;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class MediaMapper implements EntityMapper<Media, MediaDto> {
+class MediaMapper implements EntityMapper<Media, MediaDto> {
     private final TitleMapper titleMapper;
     private final DateMapper dateMapper;
     private final CharacterMapper characterMapper;

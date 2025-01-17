@@ -1,11 +1,11 @@
 package pjatk.edu.pl.backend.service.mapper;
 
+import org.springframework.stereotype.Component;
 import pjatk.edu.pl.data.dto.TitleDto;
 import pjatk.edu.pl.data.model.Title;
-import org.springframework.stereotype.Component;
 
 @Component
-public class TitleMapper implements EntityMapper<Title, TitleDto> {
+class TitleMapper implements EntityMapper<Title, TitleDto> {
 
     @Override
     public Title toEntity(TitleDto dto) {

@@ -80,7 +80,7 @@ public class MediaClient {
         }
     }
 
-    public List<MediaDto> getAnimeByDateRange(Integer from, Integer to) {
+    public List<MediaDto> getAnimeByDateRange(Integer from, Integer to) throws MediaClientException {
         List<MediaDto> allMediaDto = new ArrayList<>();
         boolean hasNextPage = true;
         int currentPage = 1;

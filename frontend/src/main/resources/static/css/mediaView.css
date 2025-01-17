@@ -104,7 +104,7 @@ body {
     display: grid;
     box-shadow: 0 0 8px black;
     grid-template-columns: 150px auto;
-    column-gap: 10px;
+    column-gap: 20px;
     border-radius: 8px;
     overflow: hidden;
 }

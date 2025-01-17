@@ -1,15 +1,15 @@
 package pjatk.edu.pl.backend.service.mapper;
 
-import pjatk.edu.pl.data.model.Genre;
-import pjatk.edu.pl.data.repository.GenreRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import pjatk.edu.pl.data.model.Genre;
+import pjatk.edu.pl.data.repository.GenreRepository;
 
 import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class GenreMapper implements EntityMapper<Genre, String> {
+class GenreMapper implements EntityMapper<Genre, String> {
     private final GenreRepository genreRepository;
 
     @Override

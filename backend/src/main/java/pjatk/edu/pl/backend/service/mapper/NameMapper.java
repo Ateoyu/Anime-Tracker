@@ -1,11 +1,11 @@
 package pjatk.edu.pl.backend.service.mapper;
 
+import org.springframework.stereotype.Component;
 import pjatk.edu.pl.data.dto.NameDto;
 import pjatk.edu.pl.data.model.Name;
-import org.springframework.stereotype.Component;
 
 @Component
-public class NameMapper implements EntityMapper<Name, NameDto> {
+class NameMapper implements EntityMapper<Name, NameDto> {
 
     @Override
     public Name toEntity(NameDto dto) {
