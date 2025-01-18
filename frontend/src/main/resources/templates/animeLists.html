@@ -26,13 +26,13 @@
             <label for="description">List Description: </label>
             <input type="text" id="description" name="description" th:field="*{description}">
 
-            <input type="submit" value="Submit">
+            <input type="submit" id="createAnimeListSubmit"  value="Submit">
         </form>
     </fieldset>
 
 
     <section>
-        <table>
+        <table id="animeListTable">
             <thead>
             <tr>
                 <th>Title</th>

@@ -32,6 +32,8 @@ dependencies {
     //Logging
     implementation 'ch.qos.logback:logback-classic:1.4.12'
 
+
+    implementation 'org.seleniumhq.selenium:selenium-java:4.27.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
