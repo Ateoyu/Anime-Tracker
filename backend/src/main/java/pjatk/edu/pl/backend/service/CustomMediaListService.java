@@ -30,7 +30,10 @@ public class CustomMediaListService {
             log.error("Attempted to create media list with empty description");
             throw new CustomMediaListIncompleteException("Media list description cannot be empty");
         }
-        
+
+
+        mediaList.setTitle(mediaList.getTitle().trim());
+        mediaList.setDescription(mediaList.getDescription().trim());
         mediaListRepository.save(mediaList);
         log.debug("Successfully created media list with ID: {}", mediaList.getId());
     }
@@ -83,6 +86,7 @@ public class CustomMediaListService {
             mediaListRepository.save(mediaList);
             log.info("Successfully deleted media with ID {} from list with ID {}", mediaId, id);
         }
+
     }
 
     public void deleteMediaList(int id) {

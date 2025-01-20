@@ -5,18 +5,19 @@
     <title th:text="${animeList.title}"></title>
     <link th:rel="stylesheet" th:href="@{/css/homeStyle.css}">
     <link th:rel="stylesheet" th:href="@{/css/footerStyle.css}">
+    <link th:rel="stylesheet" th:href="@{/css/browseGrid.css}">
     <link th:rel="stylesheet" th:href="@{/css/mediaListView.css}">
 </head>
 <body>
 
 <header th:replace="~{home :: mainHeader}"></header>
 
-<main>
+<div class="mainContentContainer">
     <h1 th:text="${animeList.title}"></h1>
     <p th:text="${animeList.description}"></p>
 
     <main id="mainGridContainer">
-        <div th:each="anime : ${animeList.mediaList}">
+        <div th:each="anime : ${animeList.mediaList}" class="mediaObjectContainer">
             <a th:href="${'/anime/' + anime.anilistId ?: anime.id}" class="animeDiv">
                 <div class="animeThumbnail">
                     <img th:src="${anime.coverImage}" alt="coverImage">
@@ -28,12 +29,12 @@
             </a>
             <form method="post" th:action="${'/animeLists/' + animeList.id}">
                 <input type="hidden" name="mediaId" th:value="${anime.anilistId}">
-                <button type="submit">Delete</button>
+                <button type="submit" class="deleteMediaSubmitButton">Delete</button>
             </form>
         </div>
     </main>
 
-</main>
+</div>
 
 <footer th:replace="~{footer :: footer}"></footer>
 

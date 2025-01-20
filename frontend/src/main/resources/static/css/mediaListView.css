@@ -1,50 +1,29 @@
-#mainGridContainer {
-    display: grid;
-    position: relative;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-    grid-template-rows: auto;
-
-    padding: 30px;
-    justify-content: center;
-    gap: 25px;
+.mainContentContainer {
+    h1, p {
+        color: white;
+        margin-left: 30px;
+    }
 }
 
 .animeDiv {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.deleteMediaSubmitButton {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0 0 8px 8px;
+    background-color: #731b25;
+}
+
+.mediaObjectContainer {
     position: relative;
     display: grid;
     box-shadow: 2px 2px 4px #061120;
     border-radius: 8px;
     overflow: hidden;
-}
 
-.animeThumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-}
-
-.animeText {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    color: #CEDAEAFF;
-
-    background: linear-gradient(to top, black, transparent 50%);
-
-
-    padding: 0 10px 10px 10px;
-    h3 {
-        margin: 0;
-    }
-}
-
-.animeThumbnail,
-.animeText {
-    grid-area: 1/-1;
+    grid-template-rows: auto 25px;
 }

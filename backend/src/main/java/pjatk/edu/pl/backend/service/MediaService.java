@@ -7,7 +7,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pjatk.edu.pl.backend.client.MediaClient;
-import pjatk.edu.pl.backend.service.mapper.MediaMapper;
+import pjatk.edu.pl.backend.service.mapper.EntityMapper;
 import pjatk.edu.pl.data.dto.MediaDto;
 import pjatk.edu.pl.data.dto.MediaFilterDto;
 import pjatk.edu.pl.data.exception.MediaClientException;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class MediaService {
     private final MediaClient mediaClient;
     private final MediaRepository mediaRepository;
-    private final MediaMapper mediaMapper;
+    private final EntityMapper<Media, MediaDto> mediaMapper;
 
     @Transactional
     @Cacheable(value = "media")
@@ -50,7 +50,6 @@ public class MediaService {
                     if (media == null) {
                         throw new MediaObjectIncomplete("Failed to map media data for ID: " + anilistId);
                     }
-
 
                     return mediaRepository.save(media);
                 });
@@ -99,15 +98,6 @@ public class MediaService {
             throw new MediaNotFoundException("No media found for page " + page);
         }
         return mediaPage;
-    }
-
-    public List<Media> getAllMedia() {
-        List<Media> mediaList = mediaRepository.findAll();
-        if (mediaList.isEmpty()) {
-            throw new MediaNotFoundException("No media found in local database.");
-        }
-
-        return mediaList;
     }
 
     public List<Integer> getAllAnimeReleaseYear() {

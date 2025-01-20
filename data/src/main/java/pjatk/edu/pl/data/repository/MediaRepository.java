@@ -25,10 +25,10 @@ public interface MediaRepository extends JpaRepository<Media, Integer>,
             "BETWEEN :fromDate AND :toDate")
     List<Media> findByDateRange(@Param("fromDate") Integer fromDate, @Param("toDate") Integer toDate);
 
-    @NativeQuery("SELECT DISTINCT start_year FROM media")
+    @NativeQuery("SELECT DISTINCT start_year FROM media ORDER BY start_year")
     List<Integer> getAllMediaYears();
 
-    @NativeQuery("SELECT DISTINCT episodes FROM media ORDER BY episodes")
+    @NativeQuery("SELECT DISTINCT episodes FROM media WHERE episodes IS NOT NULL ORDER BY episodes")
     List<Integer> getAllMediaEpisodes();
 
     @Query("SELECT DISTINCT m FROM Media m JOIN m.genres g WHERE g.name = :genreName")
