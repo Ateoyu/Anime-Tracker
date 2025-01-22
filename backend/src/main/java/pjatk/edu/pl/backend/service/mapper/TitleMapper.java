@@ -5,7 +5,7 @@ import pjatk.edu.pl.data.dto.TitleDto;
 import pjatk.edu.pl.data.model.Title;
 
 @Component
-class TitleMapper implements EntityMapper<Title, TitleDto> {
+public class TitleMapper implements EntityMapper<Title, TitleDto> {
 
     @Override
     public Title toEntity(TitleDto dto) {
