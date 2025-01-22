@@ -5,7 +5,7 @@ import pjatk.edu.pl.data.dto.DateDto;
 import pjatk.edu.pl.data.model.Date;
 
 @Component
-class DateMapper implements EntityMapper<Date, DateDto>  {
+public class DateMapper implements EntityMapper<Date, DateDto>  {
 
     @Override
     public Date toEntity(DateDto dto) {

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-class GenreMapper implements EntityMapper<Genre, String> {
+public class GenreMapper implements EntityMapper<Genre, String> {
     private final GenreRepository genreRepository;
 
     @Override

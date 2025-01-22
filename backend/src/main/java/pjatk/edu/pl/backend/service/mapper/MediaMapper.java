@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-class MediaMapper implements EntityMapper<Media, MediaDto> {
+public class MediaMapper implements EntityMapper<Media, MediaDto> {
     private final TitleMapper titleMapper;
     private final DateMapper dateMapper;
     private final CharacterMapper characterMapper;

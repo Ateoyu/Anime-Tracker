@@ -8,7 +8,7 @@ import pjatk.edu.pl.data.repository.CharacterRepository;
 
 @Component
 @AllArgsConstructor
-class CharacterMapper implements EntityMapper<Character, CharacterDto> {
+public class CharacterMapper implements EntityMapper<Character, CharacterDto> {
     private final CharacterRepository characterRepository;
     private final DateMapper dateMapper;
     private final NameMapper nameMapper;

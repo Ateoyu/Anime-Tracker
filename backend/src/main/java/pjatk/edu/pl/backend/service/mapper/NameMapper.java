@@ -5,7 +5,7 @@ import pjatk.edu.pl.data.dto.NameDto;
 import pjatk.edu.pl.data.model.Name;
 
 @Component
-class NameMapper implements EntityMapper<Name, NameDto> {
+public class NameMapper implements EntityMapper<Name, NameDto> {
 
     @Override
     public Name toEntity(NameDto dto) {
