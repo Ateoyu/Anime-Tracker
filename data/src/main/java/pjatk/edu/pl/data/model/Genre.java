@@ -1,5 +1,6 @@
 package pjatk.edu.pl.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ public class Genre {
     private String name;
 
     @ManyToMany(mappedBy = "genres")
+    @JsonIgnore
     private Set<Media> media;
 
     public Genre(String genreName) {

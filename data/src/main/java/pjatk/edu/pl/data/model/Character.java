@@ -1,5 +1,6 @@
 package pjatk.edu.pl.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,5 +39,6 @@ public class Character {
     private String imageUrl;
 
     @ManyToMany(mappedBy = "characters")
+    @JsonIgnore
     private Set<Media> mediaAppearances;
 } 
